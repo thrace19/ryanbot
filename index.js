@@ -39,9 +39,9 @@ fs.readdir("./commands/", (err, files) => {
 
   function status(){
     let status = [
-        `Serving ${bot.users.size} users`,
-        `With ${bot.guilds.size} server `,
-        `discord.gg/gxE2Ya7`
+        `TEXT`,
+        `TEXT`,
+        `TEXT`
     ]
     let rstatus = Math.floor(Math.random() * status.length);
     bot.user.setActivity(status[rstatus], {type:"PLAYING"})
@@ -49,11 +49,11 @@ fs.readdir("./commands/", (err, files) => {
 
 const id = '446886047511740416';
 bot.on("ready", () => {
-  console.log(`Ryanbot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`); 
+  console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`); 
 });
 
 bot.on("guildCreate", guild => {
-  let channel = bot.channels.get("449115323933917184")
+  let channel = bot.channels.get("Channel ID")
   let sicon = guild.iconURL;
   let crtEmb = new Discord.RichEmbed()
   .setTitle(`:white_check_mark: Joined ${guild.name}`)
@@ -68,7 +68,7 @@ channel.send(crtEmb)
 })
 
 bot.on("guildDelete", guild => {
-  let channel = bot.channels.get("449115323933917184")
+  let channel = bot.channels.get("Channel ID")
   let sicon = guild.iconURL;
   let delEmb = new Discord.RichEmbed()
   .setTitle(`:x: Leaving ${guild.name}`)
