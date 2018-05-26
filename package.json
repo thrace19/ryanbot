@@ -1,0 +1,38 @@
+{
+  "name": "RyanBot",
+  "version": "1.0.0",
+  "description": "A tutorial bot for TSC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ned",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.0",
+    "discord.js": "^11.3.2",
+    "ffmpeg-binaries": "^3.2.2-3",
+    "fortnite": "^4.1.1",
+    "fs": "0.0.1-security",
+    "gif-search": "^2.0.1",
+    "hastebin-gen": "^1.3.1",
+    "memejs": "^1.0.7",
+    "minimist": "^1.2.0",
+    "moment": "^2.22.1",
+    "moment-duration-format": "^2.2.2",
+    "ms": "^2.1.1",
+    "npm": "^5.10.0",
+    "opusscript": "0.0.6",
+    "parse-ms": "^1.0.1",
+    "profanities": "^2.6.0",
+    "python": "0.0.4",
+    "string-similarity": "^1.2.0",
+    "superagent": "^3.8.3",
+    "weather-js": "^2.0.0",
+    "weather.js": "^0.1.0",
+    "ytdl-core": "^0.20.4"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^3.0.5"
+  }
+}
