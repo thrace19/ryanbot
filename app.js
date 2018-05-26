@@ -1,3 +1,4 @@
+//without those, the bot will become useless
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const settings = require('./settings.json');
