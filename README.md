@@ -7,4 +7,4 @@ if you missing some module like discord.js
 write this
 npm i discord.js
 or if you want other
-npm i <module name>
+npm i [module name]
