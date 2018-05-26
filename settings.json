@@ -1,7 +1,7 @@
 {
-	"ownerid": "292936070603997185",
-	"modrolename": "Administrators",
-	"adminrolename": "Moderators",
-	"prefix": ".",
-	"token": "MzQ3OTM2NDgwNzc5NDM2MDMz.Ddh4GQ.f3KQt_RzGPTlzxn2YKgvc9LPjDY"
+	"ownerid": "OWNERID",
+	"modrolename": "NAME",
+	"adminrolename": "NAME",
+	"prefix": "PREFIX",
+	"token": "TOKEN"
 }
