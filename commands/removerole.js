@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const errors = require("../util/errors.js");
+const settings = require("../config.js")
 
 module.exports.run = async (bot, message, args) => {
+  try {
 
   if (!message.member.hasPermission("MANAGE_ROLES")) return errors.noPerms(message, "MANAGE_ROLES");
   if(args[0] == "515266261275312"){
@@ -23,17 +25,19 @@ module.exports.run = async (bot, message, args) => {
   }catch(e){
     message.channel.send(`RIP to <@${rMember.id}>, We removed ${gRole.name} from them. We tried to DM them, but their DMs are locked.`)
   }
+    } catch(err) {console.log(`Error with removerole \n${err}`)}
 }
 
 exports.conf = {
   enabled: true,
-  guildOnly: false,
+  guildOnly: true,
   aliases: [],
-  permLevel: 2
+  permLevel: "Moderators"
 };
 
 exports.help = {
   name: 'removerole',
+  category: "Mod",
   description: 'remove role to mentioned user.',
   usage: 'removerole [mention] [role]'
 };

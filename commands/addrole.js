@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const errors = require("../util/errors.js");
 
 module.exports.run = async (bot, message, args) => {
+  try {
 
   //!addrole @andrew Dog Person
   if (!message.member.hasPermission("MANAGE_ROLES")) return errors.noPerms(message, "MANAGE_ROLES");
@@ -13,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
   if (!rMember) return errors.cantfindUser(message.channel);
   let role = args.join(" ").slice(22);
   if (!role) return message.reply("Specify a role!");
-  let gRole = message.guild.roles.find(`name`, role);
+  let gRole = message.guild.roles.find('name', role);
   if (!gRole) return message.reply("Couldn't find that role.");
 
   if (rMember.roles.has(gRole.id)) return message.reply("They already have that role.");
@@ -25,17 +26,19 @@ module.exports.run = async (bot, message, args) => {
     console.log(e.stack);
     message.channel.send(`Congrats to <@${rMember.id}>, they have been given the role ${gRole.name}. We tried to DM them, but their DMs are locked.`)
   }
+  }catch(err) {console.log(`Error with addrole \n${err}`)}
 }
 
 exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: "ADMINISTRATORS"
+  permLevel: "Moderators"
 };
 
 exports.help = {
   name: 'addrole',
+  category: 'Mod',
   description: 'Add role to mentioned user.',
   usage: 'addrole [mention] [role]'
 };
