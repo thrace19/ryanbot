@@ -1,47 +1,42 @@
-const {RichEmbed} = require('discord.js');
-const {caseNumber} = require('../util/caseNumber.js');
-const {parseUser} = require('../util/parseUser.js');
-const settings = require('../settings.json');
-exports.run = async (client, message, args) => {
-  const user = message.mentions.users.first();
-  parseUser(message, user);
-  const modlog = client.channels.find('name', 'mod-log');
-  const caseNum = await caseNumber(client, modlog);
-  const muteRole = client.guilds.get(message.guild.id).roles.find('name', 'muted');
-  if (!modlog) return message.reply('I cannot find a mod-log channel').catch(console.error);
-  if (!muteRole) return message.reply('I cannot find a mute role').catch(console.error);
-  if (message.mentions.users.size < 1) return message.reply('You must mention someone to mute them.').catch(console.error);
-  const reason = args.splice(1, args.length).join(' ') || `Awaiting moderator's input. Use ${settings.prefix}reason ${caseNum} <reason>.`;
+const Discord = require("discord.js");
+const ms = require("ms");
 
-  const embed = new RichEmbed()
-    .setColor(0x00AE86)
-    .setTimestamp()
-    .setDescription(`**Action:** Un/mute\n**Target:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`)
-    .setFooter(`Case ${caseNum}`);
+module.exports.run = async (bot, message, args) => {
+  try {
+message.delete();
+  
+  if(!message.member.hasPermission("MANAGE_ROLES")) return message.channel.send("You need `MANAGE_ROLES` Permission to do this!");
+  let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+  if(tomute === message.guild.member(message.author)) return message.channel.send("You Can't Mute yourself!")
+  if(!tomute) return message.channel.send("Couldn't find user.");
+  let muterole = message.guild.roles.find(`name`, "muted");
 
-  if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES_OR_PERMISSIONS')) return message.reply('I do not have the correct permissions.').catch(console.error);
+let reason = args.join(" ").slice(22)
+  await(tomute.addRole(muterole.id));
+  let muteEmbed = new Discord.RichEmbed()
+  .setTitle("Mute")
+  .setColor("#fc6400")
+  .addField("User", tomute.user.tag)
+  .addField("Moderator", message.author.tag)
+  .addField("Reason", `${reason}`)
+  .setTimestamp();
+ message.channel.send(`**${tomute.user.tag}** has been muted!`)
+let channel= message.guild.channels.find(`name`, 'mod-log')
+if(!channel) return message.channel.send("Can't find mod-log Channel! Please Create one!")
+  channel.send(muteEmbed)
+    } catch(err) {console.log(`Error with mute \n${err}`)}
+}
 
-  if (message.guild.member(user).roles.has(muteRole.id)) {
-    message.guild.member(user).removeRole(muteRole).then(() => {
-      client.channels.get(modlog.id).send({embed}).catch(console.error);
-    });
-  } else {
-    message.guild.member(user).addRole(muteRole).then(() => {
-      client.channels.get(modlog.id).send({embed}).catch(console.error);
-    });
-  }
-
-};
-
-exports.conf = {
+module.exports.conf = {
   enabled: true,
-  guildOnly: false,
-  aliases: ['unmute'],
-  permLevel: 2
-};
+  guildOnly: true,
+  aliases: [],
+  permLevel: "Moderators"
+}
 
-exports.help = {
-  name: 'mute',
-  description: 'mutes or unmutes a mentioned user',
-  usage: 'un/mute [mention] [reason]'
-};
+module.exports.help = {
+  name: "mute",
+  category: 'Mod',
+  description: 'Mute mentioned User!',
+  usage: 'mute <mention>',
+}

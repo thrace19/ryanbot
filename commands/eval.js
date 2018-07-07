@@ -1,63 +1,119 @@
-const Discord = require("discord.js")
+const Discord = require('discord.js');
+const snekfetch = require('snekfetch');
 
-module.exports.run = async (client, message, args) => {
-    if(message.author.id !== '292936070603997185') return;
-    function clean(text) {
-      if (typeof(text) === "string")
-        return text.replace(/'/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-      else
-          return text;
+module.exports.run = async (client, msg, args) => {
+  try {
+    if (!['292936070603997185'].includes(msg.author.id)) {
+        return;
     }
-  
-  console.log(`\n${message.author.username}#${message.author.discriminator} Used .Eval Command On ${message.guild.name}`)
-    let argresult = args.join(' ');
-    if (message.author.id !==  '292936070603997185') {
-           // Check if user have Permissions to use the command
-          message.channel.send('You Don\'t Have Permissions To Use This Command !'); // Send Message to the channel if they dont have permissions
-          return; // Returns the code so the rest doesn't run
+    function clean(text) {
+        if (typeof (text) === 'string') {
+            return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203));
         }
-        if (!argresult) {
-          return message.channel.send("Please Specify a Code To Run!");
+        return text;
+    }
+    function token(input) {
+        if (typeof (input) === 'string') {
+            return input.replace(msg.client.token, 'NDUwMjMzMDU3OTA4MDk3MDI0.Dh2fbg.S9yx1mPR6_f-NZioJ7O9Rqobgqg');
+        } else if (typeof (input) === 'object') {
+            if (Array.isArray(input)) {
+                function hasToken(value) {
+                    if (typeof (value) !== 'string') {
+                        return true;
+                    }
+                    return value !== msg.client.token;
+                }
+                return input.filter(hasToken);
+            }
+            return input;
         }
-  
-        try {
-  
-          var evaled = eval(argresult);
-  
-          if (typeof evaled !== "string")
-         evaled = require("util").inspect(evaled);
-         if (evaled.includes(bot.token)) {
-            console.log(`\n${message.author.username}#${message.author.discriminator} Try To Get The Bot Token On ${message.guild.name} (ServerID: ${message.guild.id}).\n`)
-            return message.channel.send("", {
-             embed: {
-                color: 0xFF5733,
-                title: ':exclamation::exclamation: No :exclamation::exclamation:',
-                description: `No Token For You!`
-             }
-            });
-          }
-  
-          let embed = new Discord.RichEmbed()
-          .addField(`${client.user.username} - JavaScript Eval Success:`, `** **`)
-          .addField(":inbox_tray: **INPUT**", "```" + args.join(" ") + "```")
-          .addField(":outbox_tray: **OUTPUT**", "```" + clean(evaled) + "```")
-          .setColor(0xFF5733)
-          .setFooter(message.createdAt, message.author.avatarURL)
-          message.channel.send({embed})
-  
-        } catch (err){
-  
-          message.channel.send(new Discord.RichEmbed()
-          .addField(`${client.user.username} - JavaScript Eval Error:`, "There Was a Problem With The Code That You Are Trying To Run!")
-          .addField(":no_entry: ERROR", "```" + clean(err) + "```")
-          .setColor(0xFF5733)
-          .setFooter(message.createdAt, message.author.avatarURL))
-          
-              .catch( error => message.channel.send(`**ERROR:** ${error.message}`))
+        return input;
+    }
+    try {
+        let code = args.join(' ');
+        let evaled = eval(code);
+        let func = token(clean(evaled));
+        if (typeof func !== 'string') {
+            func = require('util').inspect(func);
         }
+        const output = '```js\n' + func + '\n```';
+        const Input = '```js\n' + msg.content.slice(6) + '\n```';
+        let type = typeof (evaled);
+        if (func.length < 1000) {
+            const embed = new Discord.RichEmbed()
+                .addField('EVAL', `**Type:** ${type}`)
+                .addField(':inbox_tray: Input', Input)
+                .addField(':outbox_tray: Output', output)
+                .setColor(0x80FF00)
+                .setTimestamp();
+            msg.channel.send({embed});
+        } else {
+            snekfetch.post('https://www.hastebin.com/documents').send(func)
+                .then(res => {
+                    const embed = new Discord.RichEmbed()
+                        .addField('EVAL', `**Type:** ${type}`)
+                        .addField(':inbox_tray: Input', Input)
+                        .addField(':outbox_tray: Output', `Output was to long so it was uploaded to hastebin https://www.hastebin.com/${res.body.key}.js `, true)
+                        .setColor(0x80FF00);
+                    msg.channel.send({embed});
+                })
+                .catch(err => {
+                    client.logger.error(err);
+                    const embed = new Discord.RichEmbed()
+                        .addField('EVAL', `**Type:** ${type}`)
+                        .addField(':inbox_tray: Input', Input)
+                        .addField(':x: ERROR', `Output was to long and could not upload to hastebin`, true)
+                        .setColor(0x80FF00);
+                    msg.channel.send({embed});
+                });
+        }
+    } catch (err) {
+        let errIns = require('util').inspect(err);
+        const error = '```js\n' + errIns + '\n```';
+        const Input = '```js\n' + msg.content.slice(6) + '\n```';
+        if (errIns.length < 1000) {
+            const embed = new Discord.RichEmbed()
+                .addField('EVAL', `**Type:** Error`)
+                .addField(':inbox_tray: Input', Input)
+                .addField(':x: ERROR', error, true)
+                .setColor(0x80FF00);
+            msg.channel.send({embed});
+        } else {
+            snekfetch.post('https://www.hastebin.com/documents').send(errIns)
+                .then(res => {
+                    const embed = new Discord.RichEmbed()
+                        .setTitle('Eval Error')
+                        .addField('EVAL', `**Type:** Error`)
+                        .addField(':inbox_tray: Input', Input)
+                        .addField(':x: ERROR', '```' + err.name + ': ' + err.message + '```', true)
+                        .setURL(`https://www.hastebin.com/${res.body.key}.js`)
+                        .setColor(0x80FF00);
+                    msg.channel.send({embed});
+                })
+                .catch(err => {
+                    client.logger.error(err);
+                    const embed = new Discord.RichEmbed()
+                        .addField('Eval', `**Type:** Error`)
+                        .addField(':inbox_tray: Input', Input)
+                        .addField(':x: ERROR', `The output was too long`, true)
+                        .setColor(0x80FF00);
+                    msg.channel.send({embed});
+                });
+        }
+    }
+    } catch(err) {console.log(`Error with eval \n${err}`)}
+};
 
-}
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: [],
+  permLevel: "Bot Owners"
+};
 
 exports.help = {
-  name: "eval"
-}
+  name: "eval",
+  category: "System",
+  description: "Evaluates arbitrary javascript.",
+  usage: "eval [...code]"
+};

@@ -1,44 +1,58 @@
-const superagent = require('superagent');
-module.exports.run = async (client, message, args) => {
+const Discord = require('discord.js');
+const moment = require('moment');
+const cooldown = new Set();
+const send = require('quick.hook')
 
-try {
-   function clean(text) {
-      if (typeof(text) === 'string')
-        return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203));
-      else
-        return text;
+exports.run = (client, message) => {
+  try {
+    let args = message.content.split(' ').slice(1).join(' ');
+    message.delete();
+
+    if (cooldown.has(message.author.id)) {
+        return message.channel.send('**[COOLDOWN]** Bugreport command has **5 Minutes** Cooldown!');
     }
-    const bug = args.join(" ")
-    if (!bug) return message.channel.send('Please specify a bug!')
-    const content = clean(`**${message.author.username}**#${message.author.discriminator} ID (${message.author.id}) reported a bug:\n${bug}\nServer: **${message.guild.name}**\nID: **${message.guild.id}**`);
-    const id = '446886047511740416';
-    new Promise((resolve, reject) => {
-      superagent.post(`https://discordapp.com/api/channels/${id}/messages`)
-        .set('Authorization', `Bot ${client.token}`).send({ content })
-        .end((err, res) => {
-          if (err) {
-            reject(err);
-            message.reply('There was an error while sending your bug report to RyanBot Support Server. Please try again later. If it still failed you can dm RyansHDs#4461');
-          } else {
-            resolve(res);
-            message.channel.send(`:white_check_mark: Your report has been sent to RyanBot Support Server to review! Thank you for report!`);
-          }
-        });
-    });
-}  catch (err) {
-console.log(err)
-}
-}
+    if (args.length < 1) {
+        return message.reply('You must supply me full reportation!');
+    }
+    cooldown.add(message.author.id);
+
+    setTimeout(() => {
+        cooldown.delete(message.author.id);
+    }, 300000);
+    let guild = message.guild;
+    const cnl = client.channels.get('449130025627680768');
+    message.reply('We got your report! Full report:');
+    const embed2 = new Discord.RichEmbed()
+  .setAuthor(`Report info ${message.author.tag}`, message.author.displayAvatarURL)
+  .addField('Report:', `**Report's Author:** ${message.author.tag}\n**Server:** ${guild.name}\n**Full report:** ${args}`)
+  .setThumbnail(message.author.displayAvatarURL)
+  .setFooter(`${moment().format('MMMM Do YYYY, h:mm:ss a')}`)
+  .setColor(16711728);
+    message.channel.send({embed: embed2});
+    const embed = new Discord.RichEmbed()
+  .setAuthor(`Report from ${message.author.tag}`, message.author.displayAvatarURL)
+  .addField('Report:', `**Report's Author:** ${message.author.tag}\n**Server:** ${guild.name}\n**Full report:** ${args}`)
+  .setThumbnail(message.author.displayAvatarURL)
+  .setColor(16711728)
+  .setFooter(`${moment().format('MMMM Do YYYY, h:mm:ss a')}`)
+    send(cnl, embed, {
+        name: `RyanBot Bugreport`,
+        icon: `https://cdn.discordapp.com/attachments/421620705570979843/462632872616919053/R-logo512.png`
+    })
+  .catch(e => client.logger.error(e))
+    } catch(err) {console.log(`Error with bugreport \n${err}`)}
+};
 
 exports.conf = {
   enabled: true,
-  guildOnly: false,
+  guildOnly: true,
   aliases: [],
-  permLevel: "Everyone"
+  permLevel: "Users"
 };
 
 exports.help = {
   name: 'bugreport',
+  category: "Util",
   description: 'Report the bug that happend on this bot!',
   usage: 'bugreport <text>'
 };

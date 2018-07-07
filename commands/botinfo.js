@@ -1,30 +1,37 @@
 const Discord = require("discord.js");
+const config = require('../config.js')
+const moment = require("moment");
+require("moment-duration-format");
+const { promisify } = require("util");
+const readdir = promisify(require("fs").readdir);
 
 module.exports.run = async (bot, message, args) => {
+  try {
+          const cmdFiles = await readdir("./commands/");
+    const duration = moment.duration(bot.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
     let bicon = bot.user.displayAvatarURL;
     let botembed = new Discord.RichEmbed()
-    .setDescription("Bot Information")
+    .setAuthor(`${bot.user.tag} Information`, bot.user.displayAvatarURL)
     .setColor("#15f153")
     .setThumbnail(bicon)
-    .addField("Bot Name", bot.user.username)
-    .addField("Creator", "<@292936070603997185>")
-    .addField("Official Server", "https://discord.gg/gxE2Ya7")
-	  .addField("Shutdown Info", "if the bot were offline that mean my pc are broken")
-	  .addField("Invite link", "https://discordapp.com/api/oauth2/authorize?client_id=347936480779436033&permissions=2146958583&scope=bot")
-    .addField("Created On", bot.user.createdAt);
+    .setDescription(`**Bot Name**: ${bot.user.username}\n**Owner**: <@${config.ownerID}>\n**Users**: ${bot.users.size}\n**Servers**: ${bot.guilds.size}\n**Commands Count**: 68\n**Uptime**: ${duration}\n**Channels**: ${bot.channels.size.toLocaleString()}`)
+    .addField('Useful Links', `[Support server](https://discord.gg/FTmxve7) - [Invite](https://discordapp.com/oauth2/authorize?client_id=450233057908097024&permissions=8&scope=bot) - [Vote](https://discordbots.org/bot/450233057908097024)`)
+    .setFooter(`Bot by RyansHDs#4461 ||`)
 
     message.channel.send(botembed);
+    } catch(err) {console.log(`Error with botinfo \n${err}`)}
 }
 
 exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: "EVERYONE"
+  permLevel: "Users"
 };
 
 exports.help = {
   name: 'botinfo',
+  category: 'User Commands',
   description: 'Show info about this bot',
   usage: 'botinfo'
 };
