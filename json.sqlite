@@ -1,1 +1,24 @@
+SQLite format 3@  TT.$�
+���:YtableAFKsAFKsCREATE TABLE AFKs (ID TEXT, json TEXT):YtablejsonjsonCREATE TABLE json (ID TEXT, json TEXT)
+=/e�
+J
+=
+��}	j	��c5h
+�
+i
+;
 
+	�X���Z0e��
+�
+��
+�K��C�*	����qe"8Iitems_412608778740170752_badge1,6E'lastDaily_4126087787401707521531180531718�](!�+changelogs[{"entry":"❌ Removed custom join message.","timestamp":1530798433967},{"entry":"✅ Added Economy commands. Thx Zinx#9129 for help.","timestamp":1530798528104},{"entry":"✅ Added Partnerships commands.","timestamp":1530798552606},{"entry":"Re-modify Botinfo and userinfo.","timestamp":1530798597455},{"entry":"✅ Added Invite commands","timestamp":1530798681944},{"entry":"✅ Re-modify Botinfo and userinfo commands again.","timestamp":1530798708608},{"entry":"❌ Disabled Economy Commands.","timestamp":1530857978518},{"entry":"✅ Added Economy Commands.","timestamp":1530874458149}]$CCurrency_2929360706039971854637.0�!�#.CCurrency_464751220418936842366.0"CCurrency_35935736131341517199.0$0Mitems_359357361313415171_pickaxe1("Currency_41260877store1{}#,CCurrency_428273076271185920546.0,-E'lastDaily_4282730762711859201530995247083
+�#lastDaily_412608778740170752{}$+Mitems_292936070603997185_pickaxe1�"7�=store1[{"name":"Badge","ID":1,"description":"Get some awesome badge","price":"100"},{"name":"Pickaxe","ID":2,"description":"Useful for mining","price":"550"}]�Q�changelog[{"entry":"Added Changelogs commands","timestamp":1530505776360},{"entry":"Added Changelogs Commands","timestamp":1530505804966},{"entry":"Added Changelogs commands","timestamp":1530505837186},{"entry":"Added Illegal commands","timestamp":1530505872997},{"entry":"Added Partnerships Commands","timestamp":1530505904761},{"entry":"Added Suggestion Commands.","timestamp":1530575500382},{"entry":"Reworking botinfo commands","timestamp":1530577148547},{"entry":"Reworking userinfo commands","timestamp":1530577753903},{"entry":"Re-add custom join message at .set commands","timestamp":1530579218751},{"entry":"Added Economy commands","timestamp":1530611618049},{"entry":"Added daily, bank, work, store, storebuy commands","timestamp":1530611644053},{"entry":"Removed custom join message due of DiscordAPIError","timestamp":1530757814254}]&Iitems_292936070603997185_badge326.0
+
+
+"3Iitems_464751220418936842_badge1-G'ownerdaily_2929360706039971851530867784142#CCurrency_282478182202998784857.0,E'workDaily_2824781822029987841530610099742,E'workDaily_1336418505850880001530608974172,E'workDaily_2929360706039971851531103728414
+�
+�#workDaily_412608778740170752{},E'lastDaily_3593573613134151711531034213453��!Currency_464(!changelogs{$CCurrency_3791850012808315001106.0,E'lastDaily_3791850012808315001531088467290"Iitems_282478182202998784_badge1!CCurrency_444454206800396309200,
+E'lastDaily_2824781822029987841530867801939�� Currency_359357361313415171,5E'workDaily_4126087787401707521531180517708,1E'lastDaily_4647512204189368421531127357431#CCurrency_299168730242351104979.0,	E'lastDaily_2929360706039971851531103725251
+y Currency_133641850585088000#CCurrency_133641850585088000231.0+UuniversalCurrency_2929360706039971852500ABalance_2929360706039971850Balance0-95uid_292936070603997185"292936070603997185"B!�9changelog[{"entry":"Adde')%)Qitems_292936070603997185_undefined,'E'workDaily_4640225590803169281530703666301#%CCurrency_464022559080316928707.0,&E'lastDaily_4640225590803169281530703663516
+#Currency_464022559080316928200$"CCurrency_4313173756740894722354.0-$G'ownerdaily_4313173756740894721530702613223#4CCurrency_412608778740170752770.0,#E'lastDaily_4313173756740894721531138885567#Currency_431317375674089472200(!C!autorole_449127957848522763"Visitors"' Cautorole_442218090109992972"Surgeon",E'workDaily_2991687302423511041530612844069,E'lastDaily_2991687302423511041530612823672?prefix_445258568598421535"."
+�0?292936070603997185"Sorry, RyansHDs is AFK."
