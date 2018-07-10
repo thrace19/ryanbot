@@ -2,15 +2,15 @@ const config = {
   
   "ownerID": "292936070603997185",
 
-  "admins": ["264356190291492865", "454215338385735691", "282478182202998784"],
+  "admins": ["264356190291492865", "282478182202998784"],
 
-  "helpers": ["434316600871616514"],
+  "helpers": [],
   
-  "donators": ["339278486160015382"],
+  "donators": [],
   
   "supporters": ["359357361313415171", "412608778740170752"],
   
-  "token": process.env.TOKEN,
+  "token": process.env.TOKEN, //your token file
   
   "defaultSettings" : {
     "prefix": ".",

@@ -106,7 +106,7 @@ module.exports.run = async (client, msg, args) => {
 
 exports.conf = {
   enabled: true,
-  guildOnly: true,
+  guildOnly: false,
   aliases: [],
   permLevel: "Bot Owners"
 };

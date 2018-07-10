@@ -6,7 +6,6 @@ let os = require('os')
 let cpuStat = require("cpu-stat")
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
-const db = require('quick.db')
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   try {
@@ -46,7 +45,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 
 exports.conf = {
   enabled: true,
-  guildOnly: true,   
+  guildOnly: false,   
   aliases: [],
   permLevel: "Users"
 };

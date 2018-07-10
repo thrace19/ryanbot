@@ -25,7 +25,7 @@ exports.run = async (bot, message, args) => {
 
 exports.conf = {
   enabled: true,
-  guildOnly: true,
+  guildOnly: false,
   aliases: [],
   permLevel: 'Users'
 }

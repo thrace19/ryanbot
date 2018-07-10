@@ -15,7 +15,7 @@ message.channel.send({ embed })
 
 exports.conf = {
   enabled: true,
-  guildOnly: true,
+  guildOnly: false,
   aliases: [],
   permLevel: "Users"
 }
