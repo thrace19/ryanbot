@@ -38,7 +38,7 @@ message.channel.send(
 
 exports.conf = {
   enabled: true,
-  guildOnly: false,
+  guildOnly: true,
   aliases: [],
   permLevel: "Users"
 };

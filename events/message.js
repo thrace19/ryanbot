@@ -1,10 +1,13 @@
 const Discord= require('discord.js')
 const send = require('quick.hook')
+const db = require('quick.db')
 
-module.exports = (client, message, guild) => {
+module.exports = async (client, message, guild) => {
   let lgcnl = client.channels.get("459324984339333122")
   if (message.author.bot) return;
 
+  db.add(`globalMessages_${message.author.id}`)
+  
   const settings = message.settings = client.getGuildSettings(message.guild);
 
   if (message.content.indexOf(settings.prefix) !== 0) return;
@@ -23,9 +26,10 @@ module.exports = (client, message, guild) => {
 
   if (level < client.levelCache[cmd.conf.permLevel]) {
     if (settings.systemNotice === "true") {
-      return message.channel.send(`You do not have permission to use this command.
-  Your permission level is ${level} (${client.config.permLevels.find(l => l.level === level).name})
-  This command requires level ${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);
+      let invalidperm = new Discord.RichEmbed()
+      .setAuthor(`${message.author.username} invalid permission `, message.author.displayAvatarURL)
+      .setDescription(`**Your Permission Level**: ${level} (${client.config.permLevels.find(l => l.level === level).name}\n**This command requires permission**: ${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`)
+      return message.channel.send(invalidperm)
     } else {
       return;
     }
@@ -43,7 +47,7 @@ module.exports = (client, message, guild) => {
   .setTimestamp()
   .setColor('RANDOM')
     send(lgcnl, logembed, {
-        name: `RyanBot CMD Logs`,
+        name: `Commands Logs`,
         icon: `https://cdn.discordapp.com/attachments/421620705570979843/462632872616919053/R-logo512.png`
     })
   cmd.run(client, message, args, level);

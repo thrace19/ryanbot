@@ -16,7 +16,7 @@ exports.run = async (client, message, args, level) => {// eslint-disable-line no
 
 exports.conf = {
   enabled: true,
-  guildOnly: false,
+  guildOnly: true,
   aliases: [],
   permLevel: "Bot Owners"
 };

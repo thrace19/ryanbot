@@ -27,7 +27,7 @@ message.channel.send(ballembed);
 
 exports.conf = {
   enabled: true,
-  guildOnly: false,
+  guildOnly: true,
   aliases: [],
   permLevel: "Users"
 };
