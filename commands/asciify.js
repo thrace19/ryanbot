@@ -1,8 +1,26 @@
 const figlet = require('figlet');
+const cooldown = new Set()
+const Discord = require('discord.js')
 
 exports.run = (client, message, args, tools) => {
   try {
-  
+        if (cooldown.has(message.author.id)) {
+    let cooldownemb = new Discord.RichEmbed()
+    .setAuthor(`${message.author.username} Cooldown..`, message.author.displayAvatarURL)
+    .setDescription(`You need to wait 10 seconds!`)
+    .setColor(`RED`)
+    .setFooter(`This message will be deleted in 10 seconds..`)
+    return message.channel.send(cooldownemb).then(msg => {
+     msg.delete(10000) 
+    })
+    
+    }
+    cooldown.add(message.author.id);
+
+    setTimeout(() => {
+        cooldown.delete(message.author.id);
+    }, 10000);
+    
   var maxLen = 10 // You can modify the max characters here
   
   if(args.join(' ').length > maxLen) return message.channel.send('Only 10 characters allowned!') 
@@ -25,7 +43,7 @@ exports.run = (client, message, args, tools) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: [],
+  aliases: ["ascii", "acy"],
   permLevel: "Users"
 };
 

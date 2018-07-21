@@ -1,16 +1,17 @@
-const Discord = require("discord.js");
-const client = new Discord.Client();
-const meme = require('memejs');
+const Discord = require('discord.js');
+const randomPuppy = require('random-puppy');
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   try {
-  meme(function(data) {
-  const embed = new Discord.RichEmbed()
-  .setTitle(data.title[0])
-  .setColor("RANDOM")
-  .setImage(data.url[0])
-  message.channel.send({embed});
-  })
+
+randomPuppy('memes')
+    .then(url => {
+        const embed = new Discord.RichEmbed()
+            .setTimestamp()
+            .setImage(url)
+            .setColor('RANDOM')
+        message.channel.send(embed);
+    });
     } catch(err) {console.log(`Error with meme \n${err}`)}
   };
 

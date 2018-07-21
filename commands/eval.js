@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 const snekfetch = require('snekfetch');
 
-module.exports.run = async (client, msg, args) => {
+module.exports.run = async (client, message, args) => {
   try {
-    if (!['292936070603997185'].includes(msg.author.id)) {
+    if (!['292936070603997185'].includes(message.author.id)) {
         return;
     }
     function clean(text) {
@@ -14,14 +14,14 @@ module.exports.run = async (client, msg, args) => {
     }
     function token(input) {
         if (typeof (input) === 'string') {
-            return input.replace(msg.client.token, 'NDUwMjMzMDU3OTA4MDk3MDI0.Dh2fbg.S9yx1mPR6_f-NZioJ7O9Rqobgqg');
+            return input.replace(message.client.token, 'NDUwMjMzMDU3OTA4MDk3MDI0.Dh2fbg.S9yx1mPR6_f-NZioJ7O9Rqobgqg');
         } else if (typeof (input) === 'object') {
             if (Array.isArray(input)) {
                 function hasToken(value) {
                     if (typeof (value) !== 'string') {
                         return true;
                     }
-                    return value !== msg.client.token;
+                    return value !== message.client.token;
                 }
                 return input.filter(hasToken);
             }
@@ -37,7 +37,7 @@ module.exports.run = async (client, msg, args) => {
             func = require('util').inspect(func);
         }
         const output = '```js\n' + func + '\n```';
-        const Input = '```js\n' + msg.content.slice(6) + '\n```';
+        const Input = '```js\n' + message.content.slice(6) + '\n```';
         let type = typeof (evaled);
         if (func.length < 1000) {
             const embed = new Discord.RichEmbed()
@@ -46,7 +46,7 @@ module.exports.run = async (client, msg, args) => {
                 .addField(':outbox_tray: Output', output)
                 .setColor(0x80FF00)
                 .setTimestamp();
-            msg.channel.send({embed});
+            message.channel.send({embed});
         } else {
             snekfetch.post('https://www.hastebin.com/documents').send(func)
                 .then(res => {
@@ -55,7 +55,7 @@ module.exports.run = async (client, msg, args) => {
                         .addField(':inbox_tray: Input', Input)
                         .addField(':outbox_tray: Output', `Output was to long so it was uploaded to hastebin https://www.hastebin.com/${res.body.key}.js `, true)
                         .setColor(0x80FF00);
-                    msg.channel.send({embed});
+                    message.channel.send({embed});
                 })
                 .catch(err => {
                     client.logger.error(err);
@@ -64,20 +64,20 @@ module.exports.run = async (client, msg, args) => {
                         .addField(':inbox_tray: Input', Input)
                         .addField(':x: ERROR', `Output was to long and could not upload to hastebin`, true)
                         .setColor(0x80FF00);
-                    msg.channel.send({embed});
+                    message.channel.send({embed});
                 });
         }
     } catch (err) {
         let errIns = require('util').inspect(err);
         const error = '```js\n' + errIns + '\n```';
-        const Input = '```js\n' + msg.content.slice(6) + '\n```';
+        const Input = '```js\n' + message.content.slice(6) + '\n```';
         if (errIns.length < 1000) {
             const embed = new Discord.RichEmbed()
                 .addField('EVAL', `**Type:** Error`)
                 .addField(':inbox_tray: Input', Input)
                 .addField(':x: ERROR', error, true)
                 .setColor(0x80FF00);
-            msg.channel.send({embed});
+            message.channel.send({embed});
         } else {
             snekfetch.post('https://www.hastebin.com/documents').send(errIns)
                 .then(res => {
@@ -88,7 +88,7 @@ module.exports.run = async (client, msg, args) => {
                         .addField(':x: ERROR', '```' + err.name + ': ' + err.message + '```', true)
                         .setURL(`https://www.hastebin.com/${res.body.key}.js`)
                         .setColor(0x80FF00);
-                    msg.channel.send({embed});
+                    message.channel.send({embed});
                 })
                 .catch(err => {
                     client.logger.error(err);
@@ -97,7 +97,7 @@ module.exports.run = async (client, msg, args) => {
                         .addField(':inbox_tray: Input', Input)
                         .addField(':x: ERROR', `The output was too long`, true)
                         .setColor(0x80FF00);
-                    msg.channel.send({embed});
+                    message.channel.send({embed});
                 });
         }
     }

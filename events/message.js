@@ -1,5 +1,6 @@
 const Discord= require('discord.js')
 const send = require('quick.hook')
+let cooldown = new Set();
 
 module.exports = (client, message, guild) => {
   let lgcnl = client.channels.get("459324984339333122")
@@ -15,17 +16,25 @@ module.exports = (client, message, guild) => {
   const level = client.permlevel(message);
 
   const cmd = client.commands.get(command) || client.commands.get(client.aliases.get(command));
-
+  
   if (!cmd) return;
 
+    let permsemb = new Discord.RichEmbed()
+  .setAuthor(`Missing permission!`, message.author.displayAvatarURL)
+  .setDescription(`<@${message.author.id}>, I'm sorry. You can't use this commands. \nReason: **Missing permission**. You need \n**${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})** Permission.\nYour permission is ${level} (${client.config.permLevels.find(l => l.level === level).name})`)
+  .setThumbnail(message.author.displayAvatarURL)
+  .setFooter(`If you found bug please report it by using .bugreport <bug>`)
+  .setTimestamp()
+  
   if (cmd && !message.guild && cmd.conf.guildOnly)
     return message.channel.send("This command is unavailable via private message. Please run this command in a guild.");
 
   if (level < client.levelCache[cmd.conf.permLevel]) {
     if (settings.systemNotice === "true") {
-      return message.channel.send(`You do not have permission to use this command.
-  Your permission level is ${level} (${client.config.permLevels.find(l => l.level === level).name})
-  This command requires level ${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);
+      return send(message.channel, permsemb, {
+        name: 'Missing permission',
+        icon: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNyt_36cWS1Lcht-rpeEovAu3SrzLevEGBhVcxQxFh5-Ulb-4B`
+      })
     } else {
       return;
     }

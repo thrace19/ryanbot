@@ -6,6 +6,7 @@ module.exports = (client, guild) => {
     let rbnEmbed = new discord.RichEmbed()
     .setAuthor(client.user.username, client.user.avatarURL)
     .setTitle(`RyanBot started serving **${guild.name}**`)
+    .setThumbnail(guild.iconURL)
     .setDescription(`**Guild Owner**: ${guild.owner}\n**Guild Name**: ${guild.name}\n**Guild ID**: ${guild.id}\n**Guild Channels Count**: ${guild.channels.size} \n**Members Gained**: ${guild.memberCount}`)
     send(rbnjoin, rbnEmbed, {
         name: `Bot Joined`,

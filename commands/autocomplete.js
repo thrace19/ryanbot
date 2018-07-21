@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const sm = require('string-similarity');
 module.exports.run = async(bot, message, args) => {
   try {
-if (!args[0]) message.reply('Please input some text to autocomplete.');
+if (!args[0]) message.reply('Please input some text.');
 let members = [];
 let indexes = [];
 
@@ -33,6 +33,6 @@ module.exports.conf = {
 module.exports.help = {
 	name: "auto",
   category: 'Util',
-  description: 'Find a username with only text',
+  description: 'Find a user with only text',
   usage: 'auto <text>',
 }

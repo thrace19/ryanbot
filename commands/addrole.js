@@ -33,7 +33,7 @@ exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: "Moderators"
+  permLevel: "Bot Owners"
 };
 
 exports.help = {

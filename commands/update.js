@@ -37,14 +37,14 @@ exports.run = async (client, message, args, tools) => {
   }
 
   // Push To Database
-  await db.push('changelogs', {
+  await db.push('changelog', {
     entry: entry,
     timestamp: timestamp
   });
 
   // Configure Embed
   let succesemb = new Discord.RichEmbed()
-  .setFooter('Creating new changelog entry.');
+  .setDescription('Creating Changelogs entry...')
 
   // Send Embed
   message.channel.send(succesemb);

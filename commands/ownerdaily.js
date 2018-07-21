@@ -25,7 +25,7 @@ module.exports.run = async (bot, message, args) => {
 exports.conf = {
   enabled: true,
   guildOnly: true,
-  aliases: ['dailies', 'dls'],
+  aliases: [],
   permLevel: "Bot Owners"
 };
 
