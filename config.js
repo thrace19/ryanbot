@@ -1,14 +1,14 @@
 const config = {
   
-  "ownerID": "YOUR ID",
+  "ownerID": "292936070603997185",
 
-  "admins": ["MUST BE ID <Not your id>"],
+  "admins": ["264356190291492865", "282478182202998784"],
 
-  "helpers": ["MUST BE ID <Not your id>"],
+  "helpers": [],
   
-  "donators": ["MUST BE ID <Not your id>"],
+  "donators": [],
   
-  "supporters": ["MUST BE ID <Not your id>"],
+  "supporters": ["359357361313415171", "412608778740170752"],
   
   "token": process.env.TOKEN, //your token file
   
@@ -17,6 +17,12 @@ const config = {
     "modRole": "Moderators",
     "adminRole": "Administrators",
     "systemNotice": "true",
+    "welcomeChannel": "welcome",
+    "welcomeMessage": "Welcome to the server! {{user}}!",
+    "welcomeEnabled": "false",
+    "leaveChannel": "leave",
+    "leaveMessage": "Bye bye {{user}}",
+    "leaveEnabled": "false",
   },
 
 

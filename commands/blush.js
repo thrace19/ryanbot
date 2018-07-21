@@ -2,13 +2,22 @@ const cooldown = new Set();
 module.exports.run = async (bot, message, args) => { // Run the command when a command is called
 try {
   
-  if (cooldown.has(message.author.id)) {
-  return message.reply(`This command have a cooldown of 2 **Seconds**`);
-}
-  cooldown.add(message.author.id);
-  setTimeout(() => {
-    cooldown.delete(message.author.id);
-  }, 2000);
+      if (cooldown.has(message.author.id)) {
+    let cooldownemb = new Discord.RichEmbed()
+    .setAuthor(`${message.author.username} Cooldown..`, message.author.displayAvatarURL)
+    .setDescription(`You need to wait 10 seconds!`)
+    .setColor(`RED`)
+    .setFooter(`This message will be deleted in 10 seconds..`)
+    return message.channel.send(cooldownemb).then(msg => {
+     msg.delete(10000) 
+    })
+    
+    }
+    cooldown.add(message.author.id);
+
+    setTimeout(() => {
+        cooldown.delete(message.author.id);
+    }, 10000);
   
     var fs = require('fs');
     var Discord = require('discord.js');

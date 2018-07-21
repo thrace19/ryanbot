@@ -8,11 +8,16 @@ exports.run = (client, message) => {
     let args = message.content.split(' ').slice(1).join(' ');
     message.delete();
 
-    if (cooldown.has(message.author.id)) {
-        return message.channel.send('**[COOLDOWN]** Suggestion command has **5 Minutes** Cooldown!');
-    }
-    if (args.length < 1) {
-        return message.reply('You must supply me full suggestion!');
+  if (cooldown.has(message.author.id)) {
+    let cooldownemb = new Discord.RichEmbed()
+    .setAuthor(`${message.author.username} Cooldown..`, message.author.displayAvatarURL)
+    .setDescription(`You need to wait 5 minutes!`)
+    .setColor(`RED`)
+    .setFooter(`This message will be deleted in 5 minutes..`)
+    return message.channel.send(cooldownemb).then(msg => {
+     msg.delete(300000) 
+    })
+    
     }
     cooldown.add(message.author.id);
 

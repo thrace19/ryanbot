@@ -4,6 +4,8 @@ require("moment-duration-format");
 const Discord = require("discord.js")
 let os = require('os')
 let cpuStat = require("cpu-stat")
+var prettyMs = require('pretty-ms');
+var oss = require('os-utils');
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 
@@ -32,11 +34,12 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   .addField("👥 Users", `${client.users.size.toLocaleString()}`,true)
   .addField("<:Servers:462487903797510144> Servers", `${client.guilds.size.toLocaleString()}`,true)
   .addField("Channels", `${client.channels.size.toLocaleString()}`,true)
-  .addField("Commands Count", "`\`68`\`",true)
+  .addField("Commands Count", "`\`70`\`",true)
   .addField("<:jslogo:462488012681642004> Library", `\`Discord.js\``,true)
   .addField("<:jslogo:462488012681642004> Library Version", `v${version}`,true)
   .addField(":book: Node Version", `${process.version}`,true)
-  .addField(":stopwatch: Uptime & Ping", `${duration} / ${Math.round(client.ping)}ms`,false)
+  .addField(":stopwatch: Uptime & Ping", `${duration} / ${Math.round(client.ping)}ms`,true)
+  //.addField(":stopwatch: Server uptime", `${prettyMs(oss.sysUptime())}`, true)
   .addField(":calendar_spiral: Created On", client.user.createdAt,true)
   message.channel.send(RynEmb)
   });

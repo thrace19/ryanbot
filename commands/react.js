@@ -102,13 +102,23 @@ function react(message, remaining, allowedMappings) {
 
 exports.run = (bot, msg, args) => {
   try {
-      if (cooldown.has(msg.author.id)) {
-        return msg.reply(`This command have a cooldown of 20 **Seconds**`);
+    var Discord = require('discord.js')
+  if (cooldown.has(msg.author.id)) {
+    let cooldownemb = new Discord.RichEmbed()
+    .setAuthor(`${msg.author.username} Cooldown..`, msg.author.displayAvatarURL)
+    .setDescription(`You need to wait 10 seconds!`)
+    .setColor(`RED`)
+    .setFooter(`This message will be deleted in 10 seconds..`)
+    return msg.channel.send(cooldownemb).then(message => {
+     message.delete(10000) 
+    })
+    
     }
     cooldown.add(msg.author.id);
+
     setTimeout(() => {
         cooldown.delete(msg.author.id);
-    }, 20000);
+    }, 10000);
   
     if (args.length < 1) {
         throw 'You must provide some text to react with.';

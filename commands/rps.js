@@ -1,7 +1,10 @@
 const Discord = require("discord.js");
+const db = require("quick.db")
 
 exports.run = async (bot, message, args, color, prefix) => {
   try {
+    let amount = 10;
+    
   var choice = args[0];
   if (choice == "paper" || choice == "p") {
     var numb = Math.floor(Math.random() * 100);
@@ -70,6 +73,6 @@ exports.conf = {
 exports.help = {
 	name: "rps",
   category: 'Fun',
-	description: 'Play Rock Paper Scissors with bot',
+	description: 'Play Rock Paper Scissors with bot. If you win you got KR.',
   usage: 'rps <rock|paper|scissors>'
 }

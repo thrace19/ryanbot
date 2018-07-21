@@ -3,8 +3,16 @@ const discord = require('discord.js');
 const cooldown = new Set();
 exports.run = async (bot, msg, args) => {
   try {
-      if (cooldown.has(msg.author.id)) {
-        return msg.reply('Too fast right there! you need to wait 5 **Seconds** before using this commands again!');
+  if (cooldown.has(msg.author.id)) {
+    let cooldownemb = new discord.RichEmbed()
+    .setAuthor(`${msg.author.username} Cooldown..`, msg.author.displayAvatarURL)
+    .setDescription(`You need to wait 5 minutes!`)
+    .setColor(`RED`)
+    .setFooter(`This message will be deleted in 5 minutes..`)
+    return msg.channel.send(cooldownemb).then(msg => {
+     msg.delete(5000) 
+    })
+    
     }
     cooldown.add(msg.author.id);
 
@@ -45,6 +53,6 @@ exports.conf = {
 exports.help = {
   name: 'strawpoll',
     category: 'Util',
-    usage: 'strawpoll "title title" <option 1,2> //title must be longer than 2',
+    usage: 'strawpoll <title> <option 1,2>',
     description: 'Creates a strawpoll',
 }

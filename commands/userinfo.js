@@ -1,24 +1,33 @@
 const discord = require("discord.js")
 const moment = require("moment")
 const cooldown = new Set();
+const config = require(`../config.js`)
+
 exports.run = (client, message, params) => {
   try {
-      if (cooldown.has(message.author.id && message.guild.id)) {
-        return message.reply('Too fast right there! you need to wait 5 **Seconds** before using this commands again!');
+  if (cooldown.has(message.author.id)) {
+    let cooldownemb = new discord.RichEmbed()
+    .setAuthor(`${message.author.username} Cooldown..`, message.author.displayAvatarURL)
+    .setDescription(`You need to wait 5 Seconds!`)
+    .setColor(`RED`)
+    .setFooter(`This message will be deleted in 5 seconds..`)
+    return message.channel.send(cooldownemb).then(msg => {
+     msg.delete(5000) 
+    })
+    
     }
-    cooldown.add(message.author.id && message.guild.id);
+    cooldown.add(message.author.id);
 
     setTimeout(() => {
-        cooldown.delete(message.author.id && message.guild.id);
+        cooldown.delete(message.author.id);
     }, 5000);
-  
 	let user = message.mentions.users.first() || message.author;
 	let embed = new discord.RichEmbed()
 	.setAuthor(`${user.username} Information`)
 	.setThumbnail(user.displayAvatarURL)
 	.setColor('RANDOM')
   .setDescription(`**Full Username**: ${user.username}\n**User ID**: ${user.id}\n**Bot**: ${user.bot}\n**User Tag**: ${user.tag}\n**User Status**: ${user.presence.status}\n**User Game**: ${user.presence.game ? user.presence.game.name : 'None'}\n**Registered on Discord**: \n${user.createdAt}`)
-
+  //.addField("Roles", message.user.roles.map(roles => roles).join(' '),true)
 	.setFooter(`Requested by ${message.author.username}#${message.author.discriminator}`, message.author.displayAvatarURL)
 	.setTimestamp()
 

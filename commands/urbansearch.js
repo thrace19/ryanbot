@@ -4,12 +4,22 @@ const hexcols = [0xFFB6C1, 0x4C84C0, 0xAD1A2C, 0x20B046, 0xF2E807, 0xF207D1, 0xE
 const cooldown = new Set();
 exports.run = (client, message, args) => {
   try {
-    if (cooldown.has(message.author.id))
-    return message.reply(`Too fast right there! You need to wait 10 **Seconds** before using this commands again!`); // this will check if the users is in the cooldown
-  cooldown.add(message.author.id);
-  setTimeout(() => {
-    cooldown.delete(message.author.id);
-  }, 10000);
+  if (cooldown.has(message.author.id)) {
+    let cooldownemb = new Discord.RichEmbed()
+    .setAuthor(`${message.author.username} Cooldown..`, message.author.displayAvatarURL)
+    .setDescription(`You need to wait 10 Seconds!`)
+    .setColor(`RED`)
+    .setFooter(`This message will be deleted in 10 seconds..`)
+    return message.channel.send(cooldownemb).then(msg => {
+     msg.delete(10000) 
+    })
+    
+    }
+    cooldown.add(message.author.id);
+
+    setTimeout(() => {
+        cooldown.delete(message.author.id);
+    }, 10000);
     if (!args) {
         return message.reply('add a urban search,');
     }

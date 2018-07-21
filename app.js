@@ -1,3 +1,12 @@
+const http = require('http');
+const express = require('express');
+const app = express();
+app.get("/", (request, response) => response.sendStatus(200));
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 280000);
+
 const Discord = require("discord.js");
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
@@ -23,8 +32,9 @@ const youtube = new YouTube(process.env.YOUTUBE_API_KEY);
 const queue = new Map();
 
 var servers = {};
-var prefix = client.config.defaultSettings.prefix
 client.on("message", async message => {
+  const settings = message.settings = client.getGuildSettings(message.guild);
+  var prefix = settings.prefix
     var args = message.content.substring(prefix.length).split(" ");
     if (!message.content.startsWith(prefix)) return;
   var searchString = args.slice(1).join(' ');
@@ -123,6 +133,7 @@ break;
 		if (!serverQueue) return message.channel.send('There is nothing playing.');
         let nowplayingemb = new Discord.RichEmbed()
         .setDescription(`🎶 Now playing: **${serverQueue.songs[0].title}**`)
+        .setColor(`GREEN`)
 		return message.channel.send(nowplayingemb);
 break;
       case "queue":
@@ -130,6 +141,7 @@ break;
         let queueemb = new Discord.RichEmbed()
         .setAuthor(`${message.guild.name} Queue list `)
         .setDescription(`${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}\n\n🎶 **Now playing:** ${serverQueue.songs[0].title}`)
+        .setColor(`GREEN`)
 		return message.channel.send(queueemb)
 break;
       case "pause":
@@ -159,8 +171,12 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 		id: video.id,
 		title: video.title,
 		url: `https://www.youtube.com/watch?v=${video.id}`,
+    channel: video.channel.title,
     durationm: video.duration.minutes,        
     durations: video.duration.seconds,
+    durationh: video.duration.hours,
+    publishedAt: video.publishedAt,
+    //channelid: video.channel.id
 	};
 	if (!serverQueue) {
 		var queueConstruct = {
@@ -180,20 +196,27 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 			queueConstruct.connection = connection;
 			play(message.guild, queueConstruct.songs[0]);
 		} catch (error) {
-			console.error(`I could not join the voice channel: ${error}`);
+      let vcerr = client.channels.get('468793396970913812')
+			vcerr.send(`I could not join the voice channel: ${error}`);
 			queue.delete(message.guild.id);
 			return message.channel.send(`I could not join the voice channel: ${error}`);
 		}
 	} else {
+    let queuelog = client.channels.get('468791228574728202')
 		serverQueue.songs.push(song);
 		console.log(serverQueue.songs);
 		if (playlist) return undefined;
     let queueemb = new Discord.RichEmbed()
-    .setAuthor(`Added to queue`, message.author.displayAvatarURL)
-    .addField(`Song :`,`**${song.title}**`, true)
-    .addField(`Song URL :` ,`${song.url}`, true)
-    .addField(`Duration`, `**${song.durationm}min ${song.durations}sec**`, true)
-    .setColor('RANDOM')
+    .setAuthor(`Added to ${message.guild.name} Queue list`, message.author.displayAvatarURL)
+    .setColor(`#1ace18`)
+    .addField(`Publisher:`, `[${song.channel}](https://www.youtube.com/channel/${song.channelid})`, true)
+    .addField(`Video ID:`, song.id, true)
+    .setFooter(`Video Published At ${song.publishedAt}`)
+    .addField(`Duration:`, `**${song.durationh}** hours, **${song.durationm}** minutes, **${song.durations}** seconds`, true)
+    .setThumbnail(`https://i.ytimg.com/vi/${song.id}/sddefault.jpg`)
+    .setDescription(`[${song.title}](https://www.youtube.com/watch?v=${song.id}})`)
+    .setColor(`GREEN`)
+    queuelog.send(queueemb)
 		return message.channel.send(queueemb);
 	}
 	return undefined;
@@ -217,15 +240,30 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 		})
 		.on('error', error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-    const songtitle = song.title
+    let playlog = client.channels.get('468793172689158144')
     let playingemb = new Discord.RichEmbed()
     .setAuthor(`🎶 Now playing`)
-    .setTitle(song.url)
-    .setColor(`#1ace18`)
-    .addField(`Title`, songtitle, true)
-    .addField(`Duration:`, `${song.durationm}min, ${song.durations}sec`, true)
+    .setColor(`GREEN`)
+    .addField(`Publisher:`, `${song.channel}`, true)
+    .addField(`Video ID:`, song.id, true)
+    .setFooter(`Video Published At ${song.publishedAt}`)
+    .addField(`Duration:`, `**${song.durationh}** hours, **${song.durationm}** minutes, **${song.durations}** seconds`, true)
+    .setThumbnail(`https://i.ytimg.com/vi/${song.id}/sddefault.jpg`)
+    .setDescription(`[${song.title}](https://www.youtube.com/watch?v=${song.id}})`)
     .setTimestamp()
     
+    let playinglogemb = new Discord.RichEmbed()
+    .setAuthor(`🎶 Now playing`, message.author.displayAvatarURL)
+    .setColor(`GREEN`)
+    .addField(`Publisher:`, `${song.channel}`, true)
+    .addField(`Video ID:`, song.id, true)
+    .setFooter(`Video Published At ${song.publishedAt}`)
+    .addField(`Duration:`, `**${song.durationh}** hours, **${song.durationm}** minutes, **${song.durations}** seconds`, true)
+    .addField(`Users who executing this commands:`, message.author.tag)
+    .setThumbnail(`https://i.ytimg.com/vi/${song.id}/sddefault.jpg`)
+    .setDescription(`[${song.title}](https://www.youtube.com/watch?v=${song.id}})`)
+    .setTimestamp()
+    playlog.send(playinglogemb)
 	serverQueue.textChannel.send(playingemb);
 }
 });
@@ -245,7 +283,6 @@ const init = async () => {
   evtFiles.forEach(file => {
     const eventName = file.split(".")[0];
     const event = require(`./events/${file}`);
-    // This line is awesome by the way. Just sayin'.
     client.on(eventName, event.bind(null, client));
     delete require.cache[require.resolve(`./events/${file}`)];
   });

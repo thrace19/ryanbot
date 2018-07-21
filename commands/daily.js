@@ -15,7 +15,7 @@ module.exports.run = async (bot, message, args) => {
     try {
     db.fetch(`Currency_${message.member.id}`).then(rm => {
     if(rm == null || 0){
-        db.set(`Currency_${message.member.id}`, 200)}
+        message.channel.send(`Cannot find this name on database! please register it by executing **.bank**`)}
 
     else if (lastDaily !== null && cooldown - (Date.now() - lastDaily) > 0) {
         let timeObj = ms(cooldown - (Date.now() - lastDaily))

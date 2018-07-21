@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const  db = require('quick.db')
 const  ms = require('parse-ms');
 
-let botversion = ('v10.6')
+let botversion = ('^v15.0.0')
 
 // parseTime function
 function parseTime(milliseconds) {
@@ -35,7 +35,7 @@ exports.run = async (client, message, args, tools) => {
   try {
 
   // Fetch Changelog Entries
-  let entries = await db.fetch('changelogs');
+  let entries = await db.fetch('changelog');
 
   // Create Embed
   const embed = new Discord.RichEmbed()

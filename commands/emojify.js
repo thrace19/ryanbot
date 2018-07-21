@@ -20,9 +20,28 @@ const mapping = {
   mapping[c] = mapping[c.toUpperCase()] = ` :regional_indicator_${c}:`;
 });
 
-
-exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
+var cooldown = new Set();
+const Discord = require('discord.js')
+module.exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   try {
+    
+          if (cooldown.has(message.author.id)) {
+    let cooldownemb = new Discord.RichEmbed()
+    .setAuthor(`${message.author.username} Cooldown..`, message.author.displayAvatarURL)
+    .setDescription(`You need to wait 10 seconds!`)
+    .setColor(`RED`)
+    .setFooter(`This message will be deleted in 10 seconds..`)
+    return message.channel.send(cooldownemb).then(msg => {
+     msg.delete(10000) 
+    })
+    
+    }
+    cooldown.add(message.author.id);
+
+    setTimeout(() => {
+        cooldown.delete(message.author.id);
+    }, 10000);
+    
   if (args.length < 1) {
     message.channel.send('You must provide some text to emojify!');
 }
