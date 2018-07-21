@@ -8,7 +8,7 @@ const config = {
   
   "donators": ["Must be ID not your ID"],
   
-  "supporters": "Must be ID not your ID"],
+  "supporters": ["Must be ID not your ID"],
   
   "token": process.env.TOKEN, //your token file
   
