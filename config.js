@@ -1,14 +1,14 @@
 const config = {
   
-  "ownerID": "292936070603997185",
+  "ownerID": "Your ID",
 
-  "admins": ["264356190291492865", "282478182202998784"],
+  "admins": ["Must be ID not your ID"],
 
-  "helpers": [],
+  "helpers": ["Must be ID not your ID"],
   
-  "donators": [],
+  "donators": ["Must be ID not your ID"],
   
-  "supporters": ["359357361313415171", "412608778740170752"],
+  "supporters": "Must be ID not your ID"],
   
   "token": process.env.TOKEN, //your token file
   
