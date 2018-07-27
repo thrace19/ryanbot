@@ -6,6 +6,7 @@ exports.run = async (client, message, args, level) => {
 	let PermEmb = new discord.RichEmbed()
   .addField("User", `${message.author.tag}`)
   .addField("Level / Name", `${level} - ${friendly}`)
+  .setColor(`GREEN`)
   message.channel.send(PermEmb)
     } catch(err) {console.log(`Error with permlevel \n${err}`)}
 };

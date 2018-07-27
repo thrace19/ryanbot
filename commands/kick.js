@@ -21,7 +21,7 @@ try {
     .addField("Kicked By", `<@${message.author.id}> with ID ${message.author.id}`)
     .addField("Kicked In", message.channel)
     .addField("Time", message.createdAt)
-    .addField("Reason", kReason);
+    .addField("Reason", kReason || "No reason specified..");
 
     let kickChannel = message.guild.channels.find(`name`, "mod-log");
     if(!kickChannel) return message.channel.send("Can't find mod-log channel.");

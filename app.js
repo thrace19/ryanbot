@@ -33,6 +33,9 @@ const queue = new Map();
 
 var servers = {};
 client.on("message", async message => {
+    // This Code Is Registered To RyansHDs#4461
+    // All This Code Is Original & By Him - Thank You For Using
+    // Hehehe i was here! <: RyansHDs#4461
   const settings = message.settings = client.getGuildSettings(message.guild);
   var prefix = settings.prefix
     var args = message.content.substring(prefix.length).split(" ");
@@ -58,25 +61,25 @@ client.on("message", async message => {
 				var video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
 				await handleVideo(video2, message, voiceChannel, true); // eslint-disable-line no-await-in-loop
 			}
-			return message.channel.send(`✅ Song: **${playlist.title}** has been added to the queue!`);
+			return message.channel.send(`✅ Playlist **${playlist.title}** has been added to the queue!`);
 		} else {
 			try {
 				var video = await youtube.getVideo(url);
 			} catch (error) {
 				try {
-					var videos = await youtube.searchVideos(searchString, 10);
+					var videos = await youtube.searchVideos(searchString, 9);
 					var index = 0;
           let selectionemb = new Discord.RichEmbed()
-          .setTitle('Song Selection')
-          .setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
-          .setFooter('Please provide a number to select one of the search results ranging from 1-10.')
+          .setTitle(`<:youtube:469420220688367616> Youtube video selection.`)
+          .setDescription(`${videos.map(video2 => `**${++index} -** [${video2.title}](${video2.url})`).join('\n')}`)
+          .setFooter('🔎 Please provide a number to select one of the search results ranging from 1-9.')
           .setColor('#0fe709')
 					message.channel.send(selectionemb).then(message => {
             message.delete(11000)
           })
 					// eslint-disable-next-line max-depth
 					try {
-						var response = await message.channel.awaitMessages(message2 => message2.content > 0 && message2.content < 11, {
+						var response = await message.channel.awaitMessages(message2 => message2.content > 0 && message2.content < 10, {
 							maxMatches: 1,
 							time: 10000,
 							errors: ['time']
@@ -140,7 +143,7 @@ break;
 		if (!serverQueue) return message.channel.send('No music playing right now.');
         let queueemb = new Discord.RichEmbed()
         .setAuthor(`${message.guild.name} Queue list `)
-        .setDescription(`${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}\n\n🎶 **Now playing:** ${serverQueue.songs[0].title}`)
+        .setDescription(`${serverQueue.songs.map(song => `**•** [${song.title}](https://www.youtube.com/watch?v=${song.id}})`).join('\n')}\n\n🎶 **Now playing:** ${serverQueue.songs[0].title}`)
         .setColor(`GREEN`)
 		return message.channel.send(queueemb)
 break;
@@ -209,7 +212,7 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
     let queueemb = new Discord.RichEmbed()
     .setAuthor(`Added to ${message.guild.name} Queue list`, message.author.displayAvatarURL)
     .setColor(`#1ace18`)
-    .addField(`Publisher:`, `[${song.channel}](https://www.youtube.com/channel/${song.channelid})`, true)
+    .addField(`Publisher:`, `${song.channel}`, true)
     .addField(`Video ID:`, song.id, true)
     .setFooter(`Video Published At ${song.publishedAt}`)
     .addField(`Duration:`, `**${song.durationh}** hours, **${song.durationm}** minutes, **${song.durations}** seconds`, true)
@@ -217,7 +220,9 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
     .setDescription(`[${song.title}](https://www.youtube.com/watch?v=${song.id}})`)
     .setColor(`GREEN`)
     queuelog.send(queueemb)
-		return message.channel.send(queueemb);
+		return message.channel.send(queueemb).then(msg => {
+      message.delete(10000)
+    })
 	}
 	return undefined;
 }
@@ -242,7 +247,7 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     let playlog = client.channels.get('468793172689158144')
     let playingemb = new Discord.RichEmbed()
-    .setAuthor(`🎶 Now playing`)
+    .setTitle(`<:youtube:469420220688367616> Now playing`)
     .setColor(`GREEN`)
     .addField(`Publisher:`, `${song.channel}`, true)
     .addField(`Video ID:`, song.id, true)
