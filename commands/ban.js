@@ -17,13 +17,13 @@ module.exports.run = async (bot, message, args) => {
     if(bUser.hasPermission("MANAGE_SERVER")) return errors.equalPerms(message, bUser, "MANAGE_SERVER");
 
     let banEmbed = new Discord.RichEmbed()
-    .setDescription("~Ban~")
+    .setTitle('User Banned!')
     .setColor("#bc0000")
-    .addField("Banned User", `${bUser} with ID ${bUser.id}`)
+    .addField("Banned User", `${bUser.tag}`)
     .addField("Banned By", `<@${message.author.id}> with ID ${message.author.id}`)
     .addField("Banned In", message.channel)
     .addField("Time", message.createdAt)
-    .addField("Reason", bReason);
+    .addField("Reason", bReason || "No reason specified..");
 
     let incidentchannel = message.guild.channels.find(`name`, "mod-log");
     if(!incidentchannel) return message.channel.send("Can't find mod-log channel!");

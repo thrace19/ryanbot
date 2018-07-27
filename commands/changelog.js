@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const  db = require('quick.db')
 const  ms = require('parse-ms');
 
-let botversion = ('^v15.0.0')
+let botversion = ('^v16.5.0')
 
 // parseTime function
 function parseTime(milliseconds) {
