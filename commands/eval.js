@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) => {
     }
     function token(input) {
         if (typeof (input) === 'string') {
-            return input.replace(message.client.token, 'NDUwMjMzMDU3OTA4MDk3MDI0.Dh2fbg.S9yx1mPR6_f-NZioJ7O9Rqobgqg');
+            return input.replace(message.client.token, 'Your TOKEN');
         } else if (typeof (input) === 'object') {
             if (Array.isArray(input)) {
                 function hasToken(value) {
