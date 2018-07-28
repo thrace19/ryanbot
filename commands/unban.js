@@ -9,7 +9,11 @@ exports.run = (client, message, args) => {
   if (reason.length < 1) return message.reply('You must supply a reason for the unban.');
   if (!user) return message.reply('You must supply a User Resolvable, such as a user id.').catch(console.error);
   message.guild.unban(user);
-    } catch(err) {console.log(`Error with unban \n${err}`)}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on unban commands!\n\nError:\n\n ${err}`)
+    }
 };
 
 exports.conf = {

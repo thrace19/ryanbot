@@ -43,7 +43,11 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   .addField(":calendar_spiral: Created On", client.user.createdAt,true)
   message.channel.send(RynEmb)
   });
-    } catch(err) {console.log(`Error with stats \n${err}`)}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on stats commands!\n\nError:\n\n ${err}`)
+    }
 };
 
 exports.conf = {

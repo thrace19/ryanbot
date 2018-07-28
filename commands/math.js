@@ -3,7 +3,7 @@ const Discord = require('discord.js'),
 
 exports.run = (client, message, args, tools) => {
     
-    
+    try {
     // Verify Input
     if (!args[0]) {
             const args = new Discord.RichEmbed()
@@ -35,7 +35,12 @@ exports.run = (client, message, args, tools) => {
     // Send Embed
     message.channel.send(embed);
     
-}
+      } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on math commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

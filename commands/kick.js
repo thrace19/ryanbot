@@ -28,8 +28,12 @@ try {
 
     message.guild.member(kUser).kick(kReason);
     kickChannel.send(kickEmbed);
-  } catch(err) {console.log(`Error with kick \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on kick commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

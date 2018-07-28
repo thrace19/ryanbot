@@ -19,9 +19,12 @@ let user = message.guild.members.get(indexes[members.indexOf(username)]);
   .setDescription('Do you mean: ' + `**${user}**`)
       .setColor('RANDOM');
       message.channel.send(aEmbed);
-  }catch(err) {console.log(`Error with autocomplete \n${err}`)}
-      
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on autocomplete commands!\n\nError:\n\n ${err}`)
+    }
+};
   
 module.exports.conf = {
   enabled: true,

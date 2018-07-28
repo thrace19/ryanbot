@@ -22,8 +22,12 @@ let ballembed = new Discord.RichEmbed()
 .addField("Answer", replies[result]);
 
 message.channel.send(ballembed);
-  } catch(err) {console.log(`Error with 8ball \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on 8ball commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

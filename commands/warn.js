@@ -55,8 +55,12 @@ module.exports.run = async (bot, message, args) => {
     message.guild.member(wUser).ban(reason);
     message.reply(`<@${wUser.id}> has been banned.`)
   }
-} catch(err) {console.log(`Error with warning \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on warn commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

@@ -60,8 +60,12 @@ exports.run = async (bot, message, args, color, prefix) => {
   } else {
     message.channel.send(`You need to use .rps <rock|paper|scissors>`);
   }
-    } catch(err) {console.log(`Error with rps \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on rps commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

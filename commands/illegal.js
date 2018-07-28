@@ -38,8 +38,12 @@ exports.run = async (bot, message, args) => {
     message.channel.send({
         embed: emb
     })
-    } catch(err) {console.log(`Error with illegal \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on illegal commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

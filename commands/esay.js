@@ -13,8 +13,12 @@ module.exports.run = async (bot, message, args) => {
     .setColor('#e00707')
     .setTimestamp()
   message.channel.send(say);
-    } catch(err) {console.log(`Error with say \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on esay commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

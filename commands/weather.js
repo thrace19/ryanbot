@@ -24,8 +24,12 @@ module.exports.run = (client, message, args) => {
           .addField('Humidity', `${current.humidity}%`, true)
           message.channel.send({embed});
   })
-    } catch(err) {console.log(`Error with weather \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on weather commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

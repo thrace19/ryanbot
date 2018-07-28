@@ -33,7 +33,11 @@ exports.run = (client, message, args) => {
         text: txt,
         e: 'oO'
     }), {code: 'css'});
-    } catch(err) {console.log(`Error with cowsay \n${err}`)}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on cowsay commands!\n\nError:\n\n ${err}`)
+    }
 };
   
 

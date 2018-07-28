@@ -12,9 +12,12 @@ module.exports.run = async (bot, message, args) => {
   let warnlevel = warns[wUser.id].warns;
 
   message.channel.send(`<@${wUser.id}> has **${warnlevel}** warnings.`);
-    } catch(err) {console.log(`Error with warnings \n${err}`)}
-
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on warnings commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 
 exports.conf = {

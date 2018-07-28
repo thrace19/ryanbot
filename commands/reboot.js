@@ -3,7 +3,7 @@ exports.run = async (client, message, args, level) => {// eslint-disable-line no
   try {
  let rebembed = new Discord.RichEmbed()
  .setTitle('Rebooting...')
- .setDescription(`<@${message.author.id}> has used magic to reboot the bot!`)
+ .setDescription(`Bot rebooting...`)
 
  await message.channel.send(rebembed)
   
@@ -11,8 +11,12 @@ exports.run = async (client, message, args, level) => {// eslint-disable-line no
     await client.unloadCommand(cmd);
   });
   process.exit(1);
-    } catch(err) {console.log(`Error with reboot \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on reboot commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

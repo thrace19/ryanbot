@@ -32,13 +32,17 @@ module.exports.run = async (bot, message, args) => {
     .setAuthor(`${bot.user.tag} Information`, bot.user.displayAvatarURL)
     .setColor("#15f153")
     .setThumbnail(bicon)
-    .setDescription(`**Bot Name**: ${bot.user.username}\n**Owner**: <@${config.ownerID}>\n**Users**: ${bot.users.size}\n**Servers**: ${bot.guilds.size}\n**Commands Count**: 70\n**Uptime**: ${duration}\n**Channels**: ${bot.channels.size.toLocaleString()}`)
-    .addField('Useful Links', `[Support server](https://discord.gg/FTmxve7) - [Invite](https://discordapp.com/oauth2/authorize?client_id=450233057908097024&permissions=8&scope=bot) - [Vote](https://discordbots.org/bot/450233057908097024)`)
+    .setDescription(`**Bot Name**: ${bot.user.username}\n**Owner**: <@${config.ownerID}> | RyansHDs#4461\n**Users**: ${bot.users.size}\n**Servers**: ${bot.guilds.size}\n**Commands Count**: 70\n**Uptime**: ${duration}\n**Channels**: ${bot.channels.size.toLocaleString()}`)
+    .addField('Useful Links', `[Support server](https://discord.gg/FTmxve7) - [Invite](https://discordapp.com/oauth2/authorize?client_id=450233057908097024&permissions=8&scope=bot) - [Vote](https://discordbots.org/bot/450233057908097024) - [Donate](https://www.patreon.com/RyanBot)`)
     .setFooter(`Bot by RyansHDs#4461 ||`)
 
     message.channel.send(botembed);
-    } catch(err) {console.log(`Error with botinfo \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on botinfo commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

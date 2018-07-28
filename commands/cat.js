@@ -17,9 +17,12 @@ module.exports.run = async (bot,message,args) => {
   .setImage(body.file);
 
   message.channel.send(catembed);
-    } catch(err) {console.log(`Error with cat \n${err}`)}
-
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on cat commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

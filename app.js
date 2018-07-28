@@ -33,9 +33,10 @@ const queue = new Map();
 
 var servers = {};
 client.on("message", async message => {
-    // This Code Is Registered To RyansHDs#4461
-    // All This Code Is Original & By Him - Thank You For Using
-    // Hehehe i was here! <: RyansHDs#4461
+    // This has been registered by RyansHDs#4461
+    // All this code was a modified version of original one with full fixes.
+    // Thank you for using my code.
+    // And yush i was here <: RyansHDs#4461
   const settings = message.settings = client.getGuildSettings(message.guild);
   var prefix = settings.prefix
     var args = message.content.substring(prefix.length).split(" ");
@@ -49,10 +50,22 @@ client.on("message", async message => {
 		if (!voiceChannel) return message.channel.send('You need to be in voice channel first!');
 		var permissions = voiceChannel.permissionsFor(message.client.user);
 		if (!permissions.has('CONNECT')) {
-			return message.channel.send('I cannot connect to your voice channel, Missing CONNECT Permission');
+      const errorconnect = new Discord.RichEmbed()
+      .setColor(`RED`)
+      .setFooter(`This message will be deleted in 10 seconds..`)
+      .setDescription(`I couldn't connect into your voice channel, Missing **CONNECT** Permission.`)
+			return message.channel.send(errorconnect).then(message => {
+        message.delete(10000)
+      })
 		}
 		if (!permissions.has('SPEAK')) {
-			return message.channel.send('I cannot speak in this voice channel, Missing SPEAK Permission');
+      const errorspeak = new Discord.RichEmbed()
+      .setColor(`RED`)
+      .setFooter(`This message will be deleted in 10 seconds..`)
+      .setDescription(`I couldn't speak at your voice channel, Missing **SPEAK** Permission.`)
+			return message.channel.send(errorspeak).then(message => {
+        message.delete(10000)
+      })
 		}
       if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			var playlist = await youtube.getPlaylist(url);
@@ -61,7 +74,10 @@ client.on("message", async message => {
 				var video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
 				await handleVideo(video2, message, voiceChannel, true); // eslint-disable-line no-await-in-loop
 			}
-			return message.channel.send(`✅ Playlist **${playlist.title}** has been added to the queue!`);
+        const playlistembed = new Discord.RichEmbed()
+        .setColor(`GREEN`)
+        .setDescription(`✅ ${playlist.title} has been added to the queue!`)
+			return message.channel.send(playlistembed);
 		} else {
 			try {
 				var video = await youtube.getVideo(url);
