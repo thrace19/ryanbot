@@ -8,7 +8,11 @@ exports.run = async (client, message, args, level) => {
   .addField("Level / Name", `${level} - ${friendly}`)
   .setColor(`GREEN`)
   message.channel.send(PermEmb)
-    } catch(err) {console.log(`Error with permlevel \n${err}`)}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on permlevel commands!\n\nError:\n\n ${err}`)
+    }
 };
 
 exports.conf = {

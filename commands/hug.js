@@ -44,8 +44,12 @@ module.exports.run = async (bot, message, args) => { // Run the command when a c
         message.channel.send(`<@${message.author.id}> hugged ${args[0]}`, {
             embed: patEmb
         });
-    } catch(err) {console.log(`Error with hug \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on hug commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

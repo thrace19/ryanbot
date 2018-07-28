@@ -34,9 +34,14 @@ exports.run = (client, message, args) => {
   snekfetch.get(url)
   let mcaembed = new Discord.RichEmbed()
   .setDescription(`**${message.author.username}** Achievement!`)
+  .setColor(`GREEN`)
   .setImage(url)
   message.channel.send(mcaembed)
-  } catch(err) {console.log(`Error with achievement \n${err}`)}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on achievement commands!\n\nError:\n\n ${err}`)
+    }
 };
 
 exports.conf = {

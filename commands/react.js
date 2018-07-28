@@ -158,7 +158,11 @@ exports.run = (bot, msg, args) => {
 
         react(target, args[0].split(''), allowedMappings);
     }).catch(msg.error);
-    } catch(err) {console.log(`Error with react \n${err}`)}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      msg.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on react commands!\n\nError:\n\n ${err}`)
+    }
 };
 
 exports.conf = {

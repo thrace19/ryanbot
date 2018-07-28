@@ -26,9 +26,12 @@ message.delete();
 let channel= message.guild.channels.find(`name`, 'mod-log')
 if(!channel) return message.channel.send("I can't find mod-log Channel! Please create one!")
   channel.send(Embed)
-    } catch(err) {console.log(`Error with unmute \n${err}`)}
-
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on unmute commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 module.exports.conf = {
   enabled: true,

@@ -68,8 +68,12 @@ module.exports.run = async (bot, message, args) => {
         icon: `https://cdn.discordapp.com/attachments/421620705570979843/462632872616919053/R-logo512.png`
     })
   
-} catch(err) {console.log(`Error with report \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on report commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

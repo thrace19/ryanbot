@@ -38,8 +38,12 @@ module.exports.run = async (bot, message, args) => {
           dailylog.send(`**${message.author.tag}** Claimed Daily Payment! Amount: ${currencyFormatter.format(amount, { code: 'SEK' })}`)
         })}
     })} catch(err) {console.log(err)}
-    } catch(err) {console.log(`Error with daily \n${err}`)}
- }
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on daily commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

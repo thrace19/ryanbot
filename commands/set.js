@@ -1,4 +1,5 @@
 const { inspect } = require("util");
+const Discord = require('discord.js')
 exports.run = async (client, message, [action, key, ...value], level) => { // eslint-disable-line no-unused-vars
   try {
 
@@ -20,7 +21,11 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
     client.settings.setProp(message.guild.id, key, value.join(" "));
 
     // Confirm everything is fine!
-    message.channel.send(`${key} successfully edited to ${value.join(" ")}`);
+    const successemb = new Discord.RichEmbed()
+    .setDescription(`**${key}** has been edited to **${value.join(" ")}**`)
+    .setColor(`RED`)
+    
+    message.channel.send(successemb);
   } else
   
   // Resets a key to the default value
@@ -50,7 +55,11 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
   } else {
     message.channel.send(inspect(settings), {code: "json"});
   }
-    } catch(err) {console.log(`Error with set \n${err}`)}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on set commands!\n\nError:\n\n ${err}`)
+    }
 };
 
 exports.conf = {

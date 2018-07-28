@@ -43,8 +43,12 @@ try {
             msg.delete(3000)
         });
         message.channel.send(blushembed)
-  } catch(err) {console.log(`Error with blush \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on stats commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

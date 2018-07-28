@@ -32,8 +32,12 @@ exports.run = (client, message, params) => {
 	.setTimestamp()
 
 	message.channel.send(embed);
-    } catch(err) {console.log(`Error with userinfo \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on userinfo commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

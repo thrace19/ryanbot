@@ -52,7 +52,11 @@ message.channel.send(
         .map(c => mapping[c] || c)
         .join('')
 );
-    } catch(err) {console.log(`Error with emojify \n${err}`)}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on emojify commands!\n\nError:\n\n ${err}`)
+    }
 };
 
 exports.conf = {

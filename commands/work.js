@@ -38,8 +38,12 @@ module.exports.run= async (client, message, args) => {
           worklog.send(`**${message.author.tag}** Started working and get payed ${currencyFormatter.format(amount, { code: 'SEK' })}`)
         })}
     })} catch(err) {console.log(err)}
-    } catch(err) {console.log(`Error with work \n${err}`)}
- }
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on work commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

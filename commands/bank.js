@@ -32,6 +32,7 @@ exports.run = (client, message, args) => {
   var timestamp = require('console-timestamp');
     let rmembed = new Discord.RichEmbed()
     .setAuthor(`SuperVisor Bank`)
+    .setColor(`GREEN`)
     .setDescription(`Money amount for <@${user.id}>`)
     .setThumbnail(`https://cdn.discordapp.com/attachments/436914201462702090/463569867916836864/unknown.png`)
     .addField(`Money amount`, `${currencyFormatter.format(rm, { code: 'SEK' })}`, true)
@@ -49,9 +50,12 @@ exports.run = (client, message, args) => {
         icon: `https://cdn.discordapp.com/attachments/436914201462702090/463569867916836864/unknown.png`
         })
      }})
-  } catch(err) {console.log(`Error with account \n${err}`)}
-
-}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on bank commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

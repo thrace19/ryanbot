@@ -2,6 +2,7 @@ const ms = require('ms');
 const Discord = require('discord.js')
 
 exports.run = (client, message, args, tools) => {
+  try {
     const settings = message.settings = client.getGuildSettings(message.guild);
   var prefix = settings.prefix
     if (!message.member.hasPermission('MANAGE_CHANNELS')) return message.channel.send('Sorry, you don\'t have permission to lockdown or unlock!')
@@ -59,7 +60,12 @@ exports.run = (client, message, args, tools) => {
                     });
             });
     }
-}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on lockdown commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

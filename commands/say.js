@@ -8,8 +8,12 @@ module.exports.run = async (bot, message, args) => {
   let botmessage = args.join(" ");
   message.delete().catch();
   message.channel.send(botmessage);
-    } catch(err) {console.log(`Error with say \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on say commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

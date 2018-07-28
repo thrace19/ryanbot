@@ -25,8 +25,12 @@ exports.run = (client, message, args, tools) => {
     })
    
   }
- } catch(err) {console.log(`Error with linkshortener \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on linkshortener commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

@@ -43,9 +43,12 @@ module.exports.run = async (bot, message, args) => {
   //.addField("Your Roles", message.member.roles.map(roles => roles).join(' > '),true)
    
    message.channel.send(serverembed);
-    } catch(err) {message.channel.send(`Whoops seems like we have error right now. ${err}`)}
-
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on serverinfo commands!\n\nError:\n\n ${err}`)
+    }
+};
 exports.conf = {
   enabled: true,
   guildOnly: true,

@@ -16,13 +16,7 @@ const config = {
     "prefix": ".",
     "modRole": "Moderators",
     "adminRole": "Administrators",
-    "systemNotice": "true",
-    "welcomeChannel": "welcome",
-    "welcomeMessage": "Welcome to the server! {{user}}!",
-    "welcomeEnabled": "false",
-    "leaveChannel": "leave",
-    "leaveMessage": "Bye bye {{user}}",
-    "leaveEnabled": "false",
+    "systemNotice": "true"
   },
 
 

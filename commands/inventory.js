@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const db = require('quick.db')
 
 exports.run = (client, message, args) => {
+  try {
   db.fetch(`items_${message.member.id}_badge`).then(item1 => {
   db.fetch(`items_${message.member.id}_pickaxe`).then(item2 => {
   db.fetch(`items_${message.member.id}_replace`).then(item3 => {
@@ -22,7 +23,12 @@ exports.run = (client, message, args) => {
     .setFooter(`Here's your inventory`)
     message.channel.send(invEmbed)
   })})})})})})
-}
+        } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on inventory commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

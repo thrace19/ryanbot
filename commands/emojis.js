@@ -29,13 +29,12 @@ module.exports.run = async (client, message, args) => {
         .setDescription(`${message.guild.emojis.map(e => e).join(' ')}`)
         message.channel.send(emojisemb);
 
-    } catch (err) {
-
-        message.channel.send(`**${err.name}: ${err.message}**`)
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on emojis commands!\n\nError:\n\n ${err}`)
     }
-
-
-}
+};
 exports.conf = {
   enabled: true,
   guildOnly: false,

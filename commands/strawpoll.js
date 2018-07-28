@@ -40,8 +40,12 @@ exports.run = async (bot, msg, args) => {
             .addField('Choices:', poll.body.options.join('\n'));
 
         msg.channel.send({embed});
-    } catch(err) {console.log(`Error with strawpoll \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      msg.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on strawpoll commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

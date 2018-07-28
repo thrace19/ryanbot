@@ -7,8 +7,12 @@ exports.run = (client, message) => {
   .setDescription('Invite the bot to your server! [Invite the bot](https://discordapp.com/api/oauth2/authorize?client_id=450233057908097024&permissions=8&scope=bot)\nJoin Support server if you need help with the bot! [Support Server](https://discord.gg/FTmxve7)\nCheck the bot [commands list](https://ryanbotc.glitch.me/)')
   .setFooter(`Requested by ${message.author.tag}`)
   message.channel.send(inviteembed)
-    } catch(err) {console.log(`Error with invite \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on invite commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

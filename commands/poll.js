@@ -45,7 +45,11 @@ exports.run = async (bot, message, args, tools) => {
     const collector2 = pollTitle.createReactionCollector(filter2, { time: 15000 });
       collector2.on('collect', r => console.log(`Collected ${r.emoji.name}`));
       collector2.on('end', collected => console.log(`Collected ${collected.size} items`));
-    } catch(err) {console.log(`Error with poll \n${err}`)}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on poll commands!\n\nError:\n\n ${err}`)
+    }
 };
 
 exports.conf = {

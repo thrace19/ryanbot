@@ -82,8 +82,12 @@
         db.add(`items_${message.member.id}_${args[0]}`, parseInt(args[1]))}
     })}})})
 })
-        } catch(err) {console.log(`Error with storepay \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = bot.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on storebuy commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

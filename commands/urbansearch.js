@@ -47,8 +47,12 @@ exports.run = (client, message, args) => {
             console.log(err);
         }
     });
-    } catch(err) {console.log(`Error with urbansearch \n${err}`)}
-}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on urbansearch commands!\n\nError:\n\n ${err}`)
+    }
+};
 
 exports.conf = {
   enabled: true,

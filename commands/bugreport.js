@@ -45,7 +45,11 @@ exports.run = (client, message) => {
         icon: `https://cdn.discordapp.com/attachments/421620705570979843/462632872616919053/R-logo512.png`
     })
   .catch(e => client.logger.error(e))
-    } catch(err) {console.log(`Error with bugreport \n${err}`)}
+    } catch(err) {
+      const errorlogs = client.channels.get('464424869497536512')
+      message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
+      errorlogs.send(`Error on bugreport commands!\n\nError:\n\n ${err}`)
+    }
 };
 
 exports.conf = {
