@@ -2,7 +2,7 @@
 
 **Feel free to contribute if there a miskate**
 
->***NOTE:*** This is open source for RyanBot.
+>This is open source for RyanBot.
 
 ## Requirements
 - `git` command line ([Windows](https://git-scm.com/download/win)|[Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)|[MacOS](https://git-scm.com/download/mac)) installed
@@ -27,7 +27,7 @@ Once finished:
 To start the bot, in the command prompt, run the following command:
 `node app.js`
 
->***NOTE:*** if you don't know how to start this bot please watch some youtube video how to start discord bot!
+> if you don't know how to start this bot please watch some youtube video how to start discord bot!
 
 ## Inviting the bot
 
