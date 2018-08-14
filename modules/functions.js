@@ -44,7 +44,7 @@ module.exports = (client) => {
     text = text
       .replace(/`/g, "`" + String.fromCharCode(8203))
       .replace(/@/g, "@" + String.fromCharCode(8203))
-      .replace(client.token, "NDUwMjMzMDU3OTA4MDk3MDI0.Dh2fbg.S9yx1mPR6_f-NZioJ7O9Rqobgqg");
+      .replace(client.token, "Your Token");
 
     return text;
   };
