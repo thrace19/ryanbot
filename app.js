@@ -28,7 +28,7 @@ client.settings = new Enmap({provider: new EnmapLevel({name: "settings"})});
 
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
-const youtube = new YouTube(process.env.YOUTUBE_API_KEY);
+const youtube = new YouTube("Your Youtube Api Key");
 const queue = new Map();
 
 var servers = {};
