@@ -4,6 +4,9 @@
 
 >This is open source for RyanBot.
 
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/ryanshdsdev/ryanbot/blob/master/LICENSE.md) file for details
+
 ## Requirements
 - `git` command line ([Windows](https://git-scm.com/download/win)|[Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)|[MacOS](https://git-scm.com/download/mac)) installed
 - `node` [Version 8.0.0 or higher](https://nodejs.org)
