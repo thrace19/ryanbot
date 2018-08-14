@@ -7,8 +7,7 @@
 ## Requirements
 - `git` command line ([Windows](https://git-scm.com/download/win)|[Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)|[MacOS](https://git-scm.com/download/mac)) installed
 - `node` [Version 8.0.0 or higher](https://nodejs.org)
-- `token` obtain your bot [token](https://discordapp.com/developers/applications/) here
-
+- `token` Required to start the bot obtain it [here](https://discordapp.com/developers/applications/)
 ## Downloading
 
 In a command prompt in your project's folder (wherever that may be) run the following:
