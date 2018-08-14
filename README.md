@@ -39,4 +39,4 @@ To add your bot to your server go to this site
 ## Invite the original Bot
 
 [![Discord Bots](https://discordbots.org/api/widget/450233057908097024.svg)](https://discordbots.org/bot/450233057908097024)
-https://botsfordiscord.com/api/v1/bots/450233057908097024/embed?theme=dark
+[![Bots For Discord]https://botsfordiscord.com/api/v1/bots/450233057908097024/embed?theme=dark]
