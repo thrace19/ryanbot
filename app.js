@@ -24,7 +24,7 @@ const queue = new Map();
 
 var servers = {};
 client.on("message", async message => {
-    // This has been registered by RyansHDs#4461
+    // This code has been registered by 『RyansHDs』#4461
     // All this code was a modified version of original one with full fixes.
     // Thank you for using my code.
   const settings = message.settings = client.getGuildSettings(message.guild);
