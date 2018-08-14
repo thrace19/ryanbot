@@ -10,7 +10,7 @@ const config = {
   
   "supporters": ["Must be ID not your ID"],
   
-  "token": process.env.TOKEN, //your token file
+  "token": 'TOKEN', //your token. You can obtain it at https://discordapp.com/developers/applications/
   
   "defaultSettings" : {
     "prefix": ".",
