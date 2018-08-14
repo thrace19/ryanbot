@@ -8,6 +8,7 @@
 - `git` command line ([Windows](https://git-scm.com/download/win)|[Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)|[MacOS](https://git-scm.com/download/mac)) installed
 - `node` [Version 8.0.0 or higher](https://nodejs.org)
 - `token` Required to start the bot obtain it [here](https://discordapp.com/developers/applications/)
+- `youtube api key` Required to play the music. Get it [here](https://developers.google.com/youtube/v3/getting-started)
 ## Downloading
 
 In a command prompt in your project's folder (wherever that may be) run the following:
