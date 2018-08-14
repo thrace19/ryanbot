@@ -3,6 +3,7 @@
 **Feel free to contribute if there a miskate**
 
 >This is open source for RyanBot.
+> Commands list can be found here https://docs-ryanbot.glitch.me/
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/ryanshdsdev/ryanbot/blob/master/LICENSE.md) file for details
