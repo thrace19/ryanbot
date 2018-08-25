@@ -5,6 +5,10 @@ const cooldown = new Set()
 module.exports.run = async (bot, message, args) => {
   try {
     
+      const settings = message.settings = bot.getGuildSettings(message.guild);
+  var prefix = settings.prefix
+  var reports = settings.reportsChannel
+    
           if (cooldown.has(message.author.id)) {
     let cooldownemb = new Discord.RichEmbed()
     .setAuthor(`${message.author.username} Cooldown..`, message.author.displayAvatarURL)
@@ -40,7 +44,7 @@ module.exports.run = async (bot, message, args) => {
     .setColor(`#2be43b`)
     .setFooter(message.createdAt)
 
-    let reportschannel = message.guild.channels.find(`name`, "reports");
+    let reportschannel = message.guild.channels.find(`name`, `${reports}`);
     if(!reportschannel) return message.channel.send("Couldn't find reports channel.");
         send(reportschannel, reportEmbed, {
         name: `Reports`,
@@ -71,9 +75,13 @@ module.exports.run = async (bot, message, args) => {
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on report commands!\n\nError:\n\n ${err}`)
+      const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on report Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
-};
+}
 
 exports.conf = {
   enabled: true,

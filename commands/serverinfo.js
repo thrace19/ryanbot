@@ -23,6 +23,10 @@ module.exports.run = async (bot, message, args) => {
     let idle = message.guild.members.filter(member => member.user.presence.status === 'idle');
     let dnd = message.guild.members.filter(member => member.user.presence.status === 'dnd');
     let offline = message.guild.members.filter(member => member.user.presence.status === 'offline');
+    let emojic = message.guild.emojis.size
+      let channels = message.guild.channels.size;
+  let textChannels = message.guild.channels.filter(m => m.type == "text").size;
+  let voiceChannels = message.guild.channels.filter(i => i.type == "voice").size;
   let day = message.guild.createdAt.getDate()
   let month = 1 + message.guild.createdAt.getMonth()
   let year = message.guild.createdAt.getFullYear()
@@ -36,9 +40,10 @@ module.exports.run = async (bot, message, args) => {
    .addField("Owner", `<@${message.guild.owner.user.id}>`, true)
    .addField("Region", message.guild.region, true)
    .addField("Members", `**${message.guild.memberCount}** Users\n**${message.guild.memberCount - message.guild.members.filter(m => m.user.bot).size}** Humans\n**${message.guild.members.filter(m => m.user.bot).size}** Bots`, true)
-   .addField("Users", `**${online.size}** Online\n**${idle.size}** Idle\n**${dnd.size}** Do not disturb\n**${offline.size}** Offline`, true)
-   .addField("Guild Verify level", message.guild.verificationLevel, true)
-   .addField(`Channels Sizes`, message.guild.channels.size, true)
+   .addField(`Channels(${message.guild.channels.size})`, `**${textChannels}** Text\n**${voiceChannels}** Voice`, true)
+   .addField(`Role(s)`, message.guild.roles.size, true)
+   .addField(`Emoji(s)`, message.guild.emojis.size, true)
+   .addField("Users Status", `<a:online:469544869363318785>**${online.size}** Online\n<a:idle:469544895611404298>**${idle.size}** Idle\n<a:donotdisturb:469544909800734721>**${dnd.size}** Do not disturb\n<a:offline:469544879547088897>**${offline.size}** Offline`, true)
   //.addField("Server Roles", message.guild.roles.map(roles => roles).join(' '), true)
   //.addField("Your Roles", message.member.roles.map(roles => roles).join(' > '),true)
    
@@ -46,7 +51,11 @@ module.exports.run = async (bot, message, args) => {
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on serverinfo commands!\n\nError:\n\n ${err}`)
+            const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on serverinfo Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 exports.conf = {

@@ -1,11 +1,10 @@
-const http = require('http');
-const express = require('express');
-const app = express();
-app.get("/", (request, response) => response.sendStatus(200));
+var express = require('express');
+var app = express();
+app.get("/", (request, response) => {
+  response.sendStatus(200);
+  console.log('Pinged, Stay awake now!')
+});
 app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
 
 const Discord = require("discord.js");
 const { promisify } = require("util");
@@ -33,10 +32,9 @@ const queue = new Map();
 
 var servers = {};
 client.on("message", async message => {
-    // This has been registered by RyansHDs#4461
+    // This code has been registered by RyansHDs#4461
     // All this code was a modified version of original one with full fixes.
     // Thank you for using my code.
-    // And yush i was here <: RyansHDs#4461
   const settings = message.settings = client.getGuildSettings(message.guild);
   var prefix = settings.prefix
     var args = message.content.substring(prefix.length).split(" ");
@@ -71,8 +69,8 @@ client.on("message", async message => {
 			var playlist = await youtube.getPlaylist(url);
 			var videos = await playlist.getVideos();
 			for (const video of Object.values(videos)) {
-				var video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
-				await handleVideo(video2, message, voiceChannel, true); // eslint-disable-line no-await-in-loop
+				var video2 = await youtube.getVideoByID(video.id);
+				await handleVideo(video2, message, voiceChannel, true);
 			}
         const playlistembed = new Discord.RichEmbed()
         .setColor(`GREEN`)
@@ -86,7 +84,7 @@ client.on("message", async message => {
 					var videos = await youtube.searchVideos(searchString, 9);
 					var index = 0;
           let selectionemb = new Discord.RichEmbed()
-          .setTitle(`<:youtube:469420220688367616> Youtube video selection.`)
+          .setTitle(`<:youtube:469420220688367616> Song selection`)
           .setDescription(`${videos.map(video2 => `**${++index} -** [${video2.title}](${video2.url})`).join('\n')}`)
           .setFooter('🔎 Please provide a number to select one of the search results ranging from 1-9.')
           .setColor('#0fe709')
@@ -179,7 +177,6 @@ break;
 		}
 		return message.channel.send('There is nothing playing.');
 	
-
 	return undefined;
 break;
 }
@@ -195,7 +192,6 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
     durations: video.duration.seconds,
     durationh: video.duration.hours,
     publishedAt: video.publishedAt,
-    //channelid: video.channel.id
 	};
 	if (!serverQueue) {
 		var queueConstruct = {
@@ -289,6 +285,18 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 }
 });
 
+const DBL = require("dblapi.js");
+const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ1MDIzMzA1NzkwODA5NzAyNCIsImJvdCI6dHJ1ZSwiaWF0IjoxNTMwMTQ4ODY4fQ.kSvepFSAbpmPlXU5xOL-z6HfUso_24-q7wVH9K1-Vlk', client);
+
+// Optional events
+dbl.on('posted', () => {
+  console.log('Server count posted!');
+})
+
+dbl.on('error', e => {
+ console.log(`Oops! ${e}`);
+})
+
 const init = async () => {
 
   const cmdFiles = await readdir("./commands/");
@@ -316,7 +324,10 @@ const init = async () => {
 
   // Here we login the client.
   client.login(client.config.token);
-
+if(!client.config.token) {
+ throw new Error(`There's no token inside config.token!`) 
+}
+  
 };
 
 init();

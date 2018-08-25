@@ -43,7 +43,11 @@ exports.run = async (bot, msg, args) => {
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       msg.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on strawpoll commands!\n\nError:\n\n ${err}`)
+            const erroremb = new discord.RichEmbed()
+      .setTitle(`Error on strawpoll Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

@@ -1,26 +1,24 @@
-const Discord = require("discord.js");
-const superagent = require("superagent");
+const superagent = require("snekfetch");
+const Discord = require('discord.js')
 
-module.exports.run = async (bot,message,args) => {
+exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   try {
-  let replies = ["Kawaii Cat", "Awesome Cat", "Cute Cat", "Beutifull Cat"]
-  
-  let result = Math.floor((Math.random() * replies.length))
-
-  let{body} = await superagent
-  .get(`http://aws.random.cat/meow`);
-
-  let catembed = new Discord.RichEmbed()
-  .setColor("RANDOM")
-  .setTitle("Here Your cat")
-  .setFooter(replies[result])
-  .setImage(body.file);
-
+    superagent.get('https://nekos.life/api/v2/img/meow')
+        .end((err, response) => {
+      const catembed = new Discord.RichEmbed()
+      .setTitle(`Here your cat!`)
+      .setImage(response.body.url)
+      .setColor(`RANDOM`)
   message.channel.send(catembed);
+    })
     } catch(err) {
-      const errorlogs = bot.channels.get('464424869497536512')
+      const errorlogs = client.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on cat commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on cat Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

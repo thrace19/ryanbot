@@ -41,7 +41,11 @@ module.exports.run= async (client, message, args) => {
     } catch(err) {
       const errorlogs = client.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on work commands!\n\nError:\n\n ${err}`)
+      const erroremb = new discord.RichEmbed()
+      .setTitle(`Error on work Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 
@@ -49,7 +53,7 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: [],
-  permLevel: "Users"
+  permLevel: "Bot Owners"
 };
 
 exports.help = {

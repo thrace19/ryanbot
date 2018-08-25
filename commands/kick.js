@@ -1,18 +1,19 @@
 
 const Discord = require("discord.js");
-const errors = require("../util/errors.js");
 
 module.exports.run = async (bot, message, args) => {
 try {
-    if(!message.member.hasPermission("KICK_MEMBERS")) return errors.noPerms(message, "KICK_MEMBERS");
+            const settings = message.settings = bot.getGuildSettings(message.guild);
+        var modLog = settings.modlogChannel
+    if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("You need KICK_MEMBERS permission to do that.");
     if(args[0] == "help"){
       message.reply("Usage: .kick <user> <reason>");
       return;
     }
     let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-    if(!kUser) return errors.cantfindUser(message.channel);
+    if(!kUser) return message.channel.send("Please mention a user to kick!");
     let kReason = args.join(" ").slice(22);
-    if(kUser.hasPermission("MANAGE_MESSAGES")) return errors.equalPerms(message, kUser, "MANAGE_MESSAGES");
+    if(kUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("That user has MANAGE_MESSAGES Permission!");
 
     let kickEmbed = new Discord.RichEmbed()
     .setTitle('User Kicked!')
@@ -21,9 +22,9 @@ try {
     .addField("Kicked By", `<@${message.author.id}> with ID ${message.author.id}`)
     .addField("Kicked In", message.channel)
     .addField("Time", message.createdAt)
-    .addField("Reason", kReason || "No reason specified..");
+    .addField("Reason", kReason || `Kicked by ${message.author}: No reason specified..`);
 
-    let kickChannel = message.guild.channels.find(`name`, "mod-log");
+    let kickChannel = message.guild.channels.find(`name`, `${modLog}`);
     if(!kickChannel) return message.channel.send("Can't find mod-log channel.");
 
     message.guild.member(kUser).kick(kReason);
@@ -31,7 +32,11 @@ try {
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on kick commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on kick Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

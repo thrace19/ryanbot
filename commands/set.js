@@ -53,12 +53,22 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
     const isDefault = !overrides[key] ? "\nThis is the default global default value." : "";
     message.channel.send(`The value of ${key} is currently ${settings[key]}${isDefault}`);
   } else {
-    message.channel.send(inspect(settings), {code: "json"});
+    const embed = new Discord.RichEmbed()
+    .setTitle(`Server Settings`)
+    .setThumbnail(message.guild.iconURL)
+    .setDescription(`\`\`\`js\n\n${inspect(settings)}\n\n\`\`\``)
+    .setColor(`GREEN`)
+    .setTimestamp()
+    message.channel.send(embed)
   }
     } catch(err) {
       const errorlogs = client.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on set commands!\n\nError:\n\n ${err}`)
+            const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on set Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

@@ -31,42 +31,45 @@ exports.run = (client, message, args) => {
   db.fetch(`Currency_${user.id}`).then(rm => {
   var timestamp = require('console-timestamp');
     let rmembed = new Discord.RichEmbed()
-    .setAuthor(`SuperVisor Bank`)
+    .setAuthor(`Magazine Bank`)
     .setColor(`GREEN`)
-    .setDescription(`Money amount for <@${user.id}>`)
+    .setDescription(`Here you can see how many KR you have`)
     .setThumbnail(`https://cdn.discordapp.com/attachments/436914201462702090/463569867916836864/unknown.png`)
     .addField(`Money amount`, `${currencyFormatter.format(rm, { code: 'SEK' })}`, true)
     .addField(`Account Holder`, `<@${user.id}>`, true)
     if(rm == null) {
-      db.set(`Currency_${user.id}`, 200), message.channel.send(`Creating new account for <@${message.author.id}>`)
-      return message.channel.send(rmembed)
+      db.set(`Currency_${user.id}`, 200), message.channel.send(`Creating new account for <@${user.id}>`)
     } else {
       if(rm == Number) return error.send(`${message.author.tag} having issue with economy`)
       let formatMoney
       
     rm.toString()
         send(message.channel, rmembed, {
-        name: `Supervisor Bank`,
+        name: `Magazine Bank`,
         icon: `https://cdn.discordapp.com/attachments/436914201462702090/463569867916836864/unknown.png`
         })
      }})
     } catch(err) {
       const errorlogs = client.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on bank commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on bank Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: true,
-  aliases: ['acc', 'bank'], //let u fiddle with this later XD
-  permLevel: "Users"
+  aliases: ['acc', 'bal', 'balance'],
+  permLevel: "Bot Admins"
 };
 
 exports.help = {
   name: 'bank',
   category: 'Fun',
   description: 'See the KR amount you have',
-  usage: 'bank'
+  usage: 'bank [@user]'
 };

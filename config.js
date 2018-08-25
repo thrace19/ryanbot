@@ -2,7 +2,7 @@ const config = {
   
   "ownerID": "292936070603997185",
 
-  "admins": ["264356190291492865", "282478182202998784"],
+  "admins": ["264356190291492865", "282478182202998784", "474604212148502530"],
 
   "helpers": [],
   
@@ -12,15 +12,25 @@ const config = {
   
   "token": process.env.TOKEN, //your token file
   
-  "defaultSettings" : {
+  "defaultSettings":{
     "prefix": ".",
+    
     "modRole": "Moderators",
+    
     "adminRole": "Administrators",
-    "systemNotice": "true"
+    
+    "systemNotice": "true",
+    
+    "modlogChannel": "mod-log",
+    
+    "mutedRole": "muted",
+    
+    "reportsChannel": "reports",
   },
 
 
   permLevels: [
+        
     { level: 0,
       name: "Users", 
       check: () => true

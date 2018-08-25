@@ -34,19 +34,23 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   .addField("👥 Users", `${client.users.size.toLocaleString()}`,true)
   .addField("<:Servers:462487903797510144> Servers", `${client.guilds.size.toLocaleString()}`,true)
   .addField("Channels", `${client.channels.size.toLocaleString()}`,true)
-  .addField("Commands Count", "`\`70`\`",true)
+  .addField("Commands Count", "`\`77`\`",true)
   .addField("<:jslogo:462488012681642004> Library", `\`Discord.js\``,true)
-  .addField("<:jslogo:462488012681642004> Library Version", `v${version}`,true)
+  .addField("<:jslogo:462488012681642004> Library Version", `v**${version}**`,true)
   .addField(":book: Node Version", `${process.version}`,true)
   .addField(":stopwatch: Uptime & Ping", `${duration} / ${Math.round(client.ping)}ms`,true)
-  //.addField(":stopwatch: Server uptime", `${prettyMs(oss.sysUptime())}`, true)
+  .addField(":stopwatch: Server uptime", `${prettyMs(oss.sysUptime())} `, true)
   .addField(":calendar_spiral: Created On", client.user.createdAt,true)
   message.channel.send(RynEmb)
   });
     } catch(err) {
       const errorlogs = client.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on stats commands!\n\nError:\n\n ${err}`)
+            const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on stats Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

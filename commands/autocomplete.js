@@ -22,7 +22,11 @@ let user = message.guild.members.get(indexes[members.indexOf(username)]);
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on autocomplete commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on autocomplete Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
   

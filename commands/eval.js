@@ -1,5 +1,8 @@
 const Discord = require('discord.js');
 const snekfetch = require('snekfetch');
+const db = require('quick.db')
+const { promisify } = require("util");
+const readdir = promisify(require("fs").readdir);
 
 module.exports.run = async (client, message, args) => {
   try {
@@ -14,7 +17,7 @@ module.exports.run = async (client, message, args) => {
     }
     function token(input) {
         if (typeof (input) === 'string') {
-            return input.replace(message.client.token, 'NDUwMjMzMDU3OTA4MDk3MDI0.Dh2fbg.S9yx1mPR6_f-NZioJ7O9Rqobgqg');
+            return input.replace(message.client.token, 'Secret token!');
         } else if (typeof (input) === 'object') {
             if (Array.isArray(input)) {
                 function hasToken(value) {
@@ -41,7 +44,7 @@ module.exports.run = async (client, message, args) => {
         let type = typeof (evaled);
         if (func.length < 1000) {
             const embed = new Discord.RichEmbed()
-                .addField('EVAL', `**Type:** ${type}`)
+                .addField('Eval', `**Type:** ${type}`)
                 .addField(':inbox_tray: Input', Input)
                 .addField(':outbox_tray: Output', output)
                 .setColor(0x80FF00)
@@ -51,7 +54,7 @@ module.exports.run = async (client, message, args) => {
             snekfetch.post('https://www.hastebin.com/documents').send(func)
                 .then(res => {
                     const embed = new Discord.RichEmbed()
-                        .addField('EVAL', `**Type:** ${type}`)
+                        .addField('eval', `**Type:** ${type}`)
                         .addField(':inbox_tray: Input', Input)
                         .addField(':outbox_tray: Output', `Output was to long so it was uploaded to hastebin https://www.hastebin.com/${res.body.key}.js `, true)
                         .setColor(0x80FF00);
@@ -60,7 +63,7 @@ module.exports.run = async (client, message, args) => {
                 .catch(err => {
                     client.logger.error(err);
                     const embed = new Discord.RichEmbed()
-                        .addField('EVAL', `**Type:** ${type}`)
+                        .addField('eval', `**Type:** ${type}`)
                         .addField(':inbox_tray: Input', Input)
                         .addField(':x: ERROR', `Output was to long and could not upload to hastebin`, true)
                         .setColor(0x80FF00);
@@ -73,7 +76,7 @@ module.exports.run = async (client, message, args) => {
         const Input = '```js\n' + message.content.slice(6) + '\n```';
         if (errIns.length < 1000) {
             const embed = new Discord.RichEmbed()
-                .addField('EVAL', `**Type:** Error`)
+                .addField('eval', `**Type:** Error`)
                 .addField(':inbox_tray: Input', Input)
                 .addField(':x: ERROR', error, true)
                 .setColor(0x80FF00);
@@ -83,7 +86,7 @@ module.exports.run = async (client, message, args) => {
                 .then(res => {
                     const embed = new Discord.RichEmbed()
                         .setTitle('Eval Error')
-                        .addField('EVAL', `**Type:** Error`)
+                        .addField('eval', `**Type:** Error`)
                         .addField(':inbox_tray: Input', Input)
                         .addField(':x: ERROR', '```' + err.name + ': ' + err.message + '```', true)
                         .setURL(`https://www.hastebin.com/${res.body.key}.js`)
@@ -104,7 +107,11 @@ module.exports.run = async (client, message, args) => {
     } catch(err) {
       const errorlogs = client.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on eval commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on eval Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

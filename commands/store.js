@@ -28,7 +28,11 @@ module.exports.run = async (bot, message, args) => {
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on store commands!\n\nError:\n\n ${err}`)
+            const erroremb = new discord.RichEmbed()
+      .setTitle(`Error on store Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 
@@ -36,7 +40,7 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: ['sr', 'shop'],
-  permLevel: "Users"
+  permLevel: "Bot Owners"
 };
 
 exports.help = {

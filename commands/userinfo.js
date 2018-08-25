@@ -27,7 +27,7 @@ exports.run = (client, message, params) => {
 	.setThumbnail(user.displayAvatarURL)
 	.setColor('RANDOM')
   .setDescription(`**Full Username**: ${user.username}\n**User ID**: ${user.id}\n**Bot**: ${user.bot}\n**User Tag**: ${user.tag}\n**User Status**: ${user.presence.status}\n**User Game**: ${user.presence.game ? user.presence.game.name : 'None'}\n**Registered on Discord**: \n${user.createdAt}`)
-  //.addField("Roles", message.user.roles.map(roles => roles).join(' '),true)
+  //.addField("Roles", `${user.roles.filter(r => r.id !== message.guild.id).map(roles => `\`${roles.name}\``).join(" **|** ") || "No Roles"}`,true)
 	.setFooter(`Requested by ${message.author.username}#${message.author.discriminator}`, message.author.displayAvatarURL)
 	.setTimestamp()
 
@@ -35,7 +35,11 @@ exports.run = (client, message, params) => {
     } catch(err) {
       const errorlogs = client.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on userinfo commands!\n\nError:\n\n ${err}`)
+            const erroremb = new discord.RichEmbed()
+      .setTitle(`Error on userinfo Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

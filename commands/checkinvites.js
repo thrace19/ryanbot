@@ -1,3 +1,4 @@
+const discord = require('discord.js')
 exports.run = (client, msg, args) => {
   try {
   const members = msg.guild.members.filter(member => member.user.presence.game && /(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(member.user.presence.game.name));
@@ -5,7 +6,11 @@ exports.run = (client, msg, args) => {
     } catch(err) {
       const errorlogs = client.channels.get('464424869497536512')
       msg.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on checkinvites commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new discord.RichEmbed()
+      .setTitle(`Error on checkinvites Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

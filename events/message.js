@@ -21,10 +21,11 @@ module.exports = (client, message, guild) => {
 
     let permsemb = new Discord.RichEmbed()
   .setAuthor(`Missing permission!`, message.author.displayAvatarURL)
-  .setDescription(`<@${message.author.id}>, I'm sorry. You can't use this commands. \nReason: **Missing permission**. You need \n**${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})** Permission.\nYour permission is ${level} (${client.config.permLevels.find(l => l.level === level).name})`)
+  .setDescription(`<@${message.author.id}>, I'm sorry. You can't use this commands. \nReason: **Missing permission**. You need \n**${client.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})** Permission.\nYour permission is ${level} (${client.config.permLevels.find(l => l.level === level).name})\n\nIf you need help feel free to join [support server](https://discord.gg/FTmxve7)`)
   .setThumbnail(message.author.displayAvatarURL)
   .setFooter(`If you found bug please report it by using .bugreport <bug>`)
   .setTimestamp()
+    .setColor(`RED`)
   
   if (cmd && !message.guild && cmd.conf.guildOnly)
     return message.channel.send("This command is unavailable via private message. Please run this command in a guild.");

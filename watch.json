@@ -6,10 +6,7 @@
   },
   "restart": {
     "exclude": [
-      "^public/",
-      "^dist/",
-      "watch.json",
-      "^data/"
+      "commands/"
     ],
     "include": [
       "\\.js$",

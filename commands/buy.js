@@ -63,7 +63,6 @@
     } else {
         let buyEmbed = new discord.RichEmbed()
         .setAuthor(`Success`, message.author.displayAvatarURL)
-        .setThumbnail(`https://www.anime-planet.com/images/characters/military-store-manager-60654.jpg`)
         .setColor(`#40e01b`)//lemme get some hex colour..
         .setFooter(`Payments Made Are Final When Buying`)
         .addField(`You finally made a purchase`, `Buyer: ${message.author}\nItem Purchased: ${args[0]}\nPayment: kr\nQuantity: ${amount}\nPayout: ${currencyFormatter.format(cost, { code: 'SEK' })}`) // Change Details (if u want)
@@ -85,7 +84,11 @@
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on storebuy commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new discord.RichEmbed()
+      .setTitle(`Error on buy Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 
@@ -93,7 +96,7 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: ['sr', 'storebuy', 'shopbuy'],
-  permLevel: "Users"
+  permLevel: "Bot Owners"
 };
 
 exports.help = {

@@ -30,7 +30,7 @@ module.exports.run = async (bot, message, args) => {
   .addField("Warned User", `<@${wUser.id}>`)
   .addField("Warned In", message.channel)
   .addField("Number of Warnings", warns[wUser.id].warns)
-  .addField("Reason", reason)
+  .addField("Reason", reason || "No reason specified...")
   .setTimestamp();
 
   let warnchannel = message.guild.channels.find(`name`, "mod-log");
@@ -58,7 +58,11 @@ module.exports.run = async (bot, message, args) => {
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on warn commands!\n\nError:\n\n ${err}`)
+            const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on warn Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

@@ -74,7 +74,6 @@ function emojiToUnicode(input) {
 
 function react(message, remaining, allowedMappings) {
     if (remaining.length < 1) {
-        // We're out of stuff
         return;
     }
 
@@ -85,13 +84,11 @@ function react(message, remaining, allowedMappings) {
     }
 
     if (!allowedMappings[char]) {
-        // Not a usable char
         return;
     }
 
     const next = allowedMappings[char].shift();
     if (!next) {
-        // We have no more mappings available
         return;
     }
 
@@ -121,13 +118,13 @@ exports.run = (bot, msg, args) => {
     }, 10000);
   
     if (args.length < 1) {
-        throw 'You must provide some text to react with.';
+        msg.channel.send(`You must provide a message!`)
     }
 
     const fetchOptions = { limit: 1 };
     if (args[1]) {
         if (!/\d{18}/.test(args[1])) {
-            throw `${args[1]} is not a valid message ID!`;
+          msg.channel.send(`${args[1]} is not a valid message ID`)
         }
 
         fetchOptions.around = args[1];
@@ -142,8 +139,6 @@ exports.run = (bot, msg, args) => {
 
         const target = messages.first();
         const allowedMappings = clone(mappings);
-
-        // Remove current reactions from allowed emojis
         target.reactions.forEach(reaction => {
             const emoji = reaction.toString();
             for (const key in allowedMappings) {
@@ -161,7 +156,11 @@ exports.run = (bot, msg, args) => {
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       msg.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on react commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on react Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

@@ -51,7 +51,11 @@ exports.run = async (client, message, args, tools) => {
     } catch(err) {
       const errorlogs = client.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on update commands!\n\nError:\n\n ${err}`)
+            const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on update Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

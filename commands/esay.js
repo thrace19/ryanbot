@@ -2,9 +2,6 @@ const Discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
   try {
-    
-  //!say Hi!
-  //Hi
   if(!message.member.hasPermission("SEND_MESSAGES")) return message.reply("no");
   let botmessage = args.join(" ");
     let say = new Discord.RichEmbed()
@@ -16,7 +13,11 @@ module.exports.run = async (bot, message, args) => {
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on esay commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on esay Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

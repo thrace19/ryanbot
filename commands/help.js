@@ -2,6 +2,8 @@ const Discord = require('discord.js')
 const cooldown = new Set();
 exports.run = (client, message, args, level) => {
   try {
+      const settings = message.settings = client.getGuildSettings(message.guild);
+  var prefix = settings.prefix
           if (cooldown.has(message.author.id)) {
     let cooldownemb = new Discord.RichEmbed()
     .setAuthor(`${message.author.username} Cooldown..`, message.author.displayAvatarURL)
@@ -18,14 +20,8 @@ exports.run = (client, message, args, level) => {
     setTimeout(() => {
         cooldown.delete(message.author.id);
     }, 10000);
-    
-  // If no specific command is called, show all filtered commands.
   if (!args[0]) {
-    // Filter all commands by which are available for the user's level, using the <Collection>.filter() method.
     const myCommands = message.guild ? client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level) : client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level &&  cmd.conf.guildOnly !== true);
-
-    // Here we have to get the command names only, and we use that array to get the longest name.
-    // This make the help commands "aligned" in the output.
     const commandNames = myCommands.keyArray();
     const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
 
@@ -42,13 +38,15 @@ exports.run = (client, message, args, level) => {
     });
     let dmembed = new Discord.RichEmbed()
     .setAuthor(`RyanBot Help`, message.author.displayAvatarURL)
-    .setDescription(`Hello **${message.author.tag}**\n\nFor full commands list can be found at my [website](https://ryanbotc.glitch.me/)\nIf you need help with bot you can join the [support server](https://discord.gg/FTmxve7). \n\n[Invite](https://discordapp.com/oauth2/authorize?client_id=450233057908097024&permissions=8&scope=bot) the bot to your server! `)
+    .setDescription(`Hello **${message.author.tag}**\n\nFor full commands list can be found at my [website](https://docs-ryanbot.glitch.me/)\nIf you need help with bot you can join the [support server](https://discord.gg/FTmxve7). \n\n[Invite](https://discordapp.com/oauth2/authorize?client_id=450233057908097024&permissions=8&scope=bot) the bot to your server!\n\nIf you like this bot you can [vote](https://discordbots.org/bot/450233057908097024/vote) it  `)
     .setColor('RANDOM')
     .setTimestamp()
     .setFooter('<> = Must be placed. [] = Optional')
     message.author.send(dmembed)
     let channelembed = new Discord.RichEmbed()
-    .setDescription(`<@${message.author.id}> Check your DM or use this link to go to my [website](https://ryanbotc.glitch.me/)`)
+    .setTitle(`My Basic Commands`)
+    .setColor(`GREEN`)
+    .setDescription(`__**Basic Commands**__:\n${prefix}userinfo - Shows info about you or other people\n${prefix}serverinfo - Shows info about current server\n${prefix}ping - Show bot responses\n${prefix}cmdlist - View full commands list on website.\n${prefix}stats - Get statistic about the bot\n\nIf your DM/PM unlocked check your DM/PM Right now.`)
     message.channel.send(channelembed)
     
 
@@ -68,7 +66,11 @@ exports.run = (client, message, args, level) => {
     } catch(err) {
       const errorlogs = client.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on help commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new Discord.RichEmbed()
+      .setTitle(`Error on help Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 

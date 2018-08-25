@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
   
     
     let cooldown = 8.64e+7;
-    let amount = Math.floor((Math.random() * 300) + 100);
+    let amount = Math.floor((Math.random() * 300) + 0);
   let dailylog = bot.channels.get('463637778819710977')
   
     let lastDaily = await db.fetch(`lastDaily_${message.author.id}`)
@@ -41,7 +41,11 @@ module.exports.run = async (bot, message, args) => {
     } catch(err) {
       const errorlogs = bot.channels.get('464424869497536512')
       message.channel.send(`Whoops, We got a error right now! This error has been reported to Support center!`)
-      errorlogs.send(`Error on daily commands!\n\nError:\n\n ${err}`)
+                  const erroremb = new discord.RichEmbed()
+      .setTitle(`Error on daily Commands`)
+      .setDescription(`**ERROR**:\n${err}`)
+      .setColor(`RED`)
+      errorlogs.send(erroremb)
     }
 };
 
@@ -49,7 +53,7 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: ['dailies', 'dls'],
-  permLevel: "Users"
+  permLevel: "Bot Owners"
 };
 
 exports.help = {
